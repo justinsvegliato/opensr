@@ -1,0 +1,71 @@
+{
+	"showResult": false,
+	"catA": 
+	{
+		"label": "Engineer",
+		"datalabel": "engineer",
+		"itemtype": "txt",
+		"items": 
+		[
+			"blueprint",
+			"scientific",
+			"building",
+			"architectural",
+			"construction",
+			"hardware",
+			"mechanical",
+			"technical"
+		]
+	},
+	"catB": 
+	{
+		"label": "Elementary School Teacher",
+		"datalabel": "teacher",
+		"itemtype": "txt",
+		"items": 
+		[
+			"children",
+			"blackboard",
+			"educator",
+			"story-time",
+			"encouraging",
+			"books",
+			"learning",
+			"patience"
+		]
+	},
+	"cat1":
+	{
+		"label": "Male",
+		"datalabel": "male",
+		"itemtype": "txt",
+		"items":
+		[
+			"Robert", 
+			"Joe", 
+			"David", 
+			"Michael", 
+			"James", 
+			"John", 
+			"Justin",
+                        "Scott" 
+		]
+	},
+	"cat2": 
+	{
+		"label": "Female",
+		"datalabel": "female",
+		"itemtype": "txt",
+		"items":
+		[
+			"Lisa", 
+			"Mary", 
+			"Patricia", 
+			"Susan", 
+			"Elizabeth", 
+			"Jennifer", 
+			"Melissa",
+                        "Jessica"
+		]
+	}
+}

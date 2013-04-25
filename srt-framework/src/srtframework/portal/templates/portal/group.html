@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="well"> 
+            <h1>Primer</h2>
+            {% if group == 't' %}
+            <p>Please spend one or two minutes thinking about the following scenario:</p>
+            <ol>
+                <li>Please use your imagination and think about a strong, successful woman working at a construction site.</li>   
+                <li>Now, take a moment to consider what she looks like. She is likely wearing pants and a yellow hard hat for safety.</li>
+                <li>Next, think about what her surroundings look like. The setting likely involves a building being constructed or renovated, with ladders and scaffolding set up.</li>
+                <li>Finally, think about what she is doing. Perhaps she is reviewing a set of blueprints. Perhaps she is managing the construction site, or conducting an inspection of the work site.</li>
+            </ol>
+            {% else %}
+            <p><img class ="img-polaroid" src="{% static 'iat/images/female-worker.png' %}" alt='Female construction worker'/></p>
+            <p>Please take a minute to view the following picture. As you look at it, consider the following:</p> 
+            <ol>
+                <li>Notice the woman in the picture.</li>
+                <li>What she is wearing?</li>
+                <li>What she is doing?</li>
+                <li>What type of job she is performing?</li>
+                <li>Where is she?</li>
+            </ol>
+            {% endif %}
+            <a href="{% url 'test' %}" class="btn btn-primary" type="button">Next &rarr;</a> 
+        </div>
+
+    </div>
+</div>
+{% endblock container %}

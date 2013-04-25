@@ -17,12 +17,10 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': get_absolute_url('srt-framework.db'),
-        'USER': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'srtframework',
+        'USER': 'root',
         'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
     }
 }
 
@@ -40,7 +38,7 @@ USE_TZ = True
 
 MEDIA_ROOT = ''
 
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 STATIC_ROOT = ''
 
@@ -48,12 +46,13 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     get_absolute_url('static'),
+    get_absolute_url('static'),
 )
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 SECRET_KEY = 'vpko466n_yu^rv%4u(!o2(bo1b(dcn**s8=x4dt@puy$nbrsi2'
@@ -67,6 +66,11 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.static',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -75,12 +79,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'srtframework.urls'
 
-WSGI_APPLICATION = 'srtframework.wsgi.application'
+#WSGI_APPLICATION = 'srtframework.wsgi.application'
 
 TEMPLATE_DIRS = (
     get_absolute_url('templates'),
@@ -89,14 +94,15 @@ TEMPLATE_DIRS = (
 PASSWORD_REQUIRED_PASSWORD = 'a9se3p2f'
 
 INSTALLED_APPS = (
+    'django.contrib.staticfiles',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    #'django.contrib.flatpages',
+    #'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'django.contrib.admin',
-    'iat',
+    'portal',
     'password_required',
 )
 
@@ -123,3 +129,9 @@ LOGGING = {
         },
     }
 }
+
+# Questions
+# Data storage for IAT/Surveymonkey?
+# One-to-one relationship between IAT and group?
+# Data presentation?
+# Creation of new group/IAT?

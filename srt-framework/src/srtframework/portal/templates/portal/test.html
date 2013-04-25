@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+<link href="{% static 'iat/css/iat.css' %}" rel="stylesheet">
+<div class="row-fluid">
+    <div class="span8 offset2">
+        <div class="well">
+            <div id="experiment_frame">
+                <div id="header">
+                    <div id="left_cat"></div><div id="right_cat"></div>
+                </div>
+                <div id="picture_frame">
+                    <div id="exp_instruct"></div>
+                    <div id="word" class="IATitem"></div>
+                    <img id="wrong" src="{% static 'iat/images/wrong.png' %}">
+                </div>
+            </div>
+
+            <div class="alert" id="under_instruct">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                If the <strong>E</strong> and <strong>I</strong> keys do not work, click the mouse inside the white box and try again. Also, if the red <span class="highlight">X</span> appears, press the other key to make the red <span class="highlight">X</span> go away.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock container %}
+
+{% block javascript %}
+<script src="{% static 'iat/js/iat.js' %}"></script>
+<script type="text/javascript">
+    initialize("{% static 'iat/text/gender.txt' %}");
+    document.onkeypress = keyHandler;
+</script>
+{% endblock javascript %}
