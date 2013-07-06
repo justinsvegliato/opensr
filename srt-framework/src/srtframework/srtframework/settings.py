@@ -6,6 +6,9 @@ PROJECT_ROOT = os.path.dirname(__file__)
 def get_absolute_url(directory):
     return os.path.join(PROJECT_ROOT, directory)
 
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -17,10 +20,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'srtframework',
-        'USER': 'root',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': get_absolute_url('srtframework.db'),
+        'USER': '',
         'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -91,7 +96,7 @@ TEMPLATE_DIRS = (
     get_absolute_url('templates'),
 )
 
-PASSWORD_REQUIRED_PASSWORD = 'a9se3p2f'
+PASSWORD_REQUIRED_PASSWORD = 'mason42607'
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',

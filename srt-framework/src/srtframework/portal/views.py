@@ -1,15 +1,36 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from password_required.decorators import password_required
 from portal.models import Participant
 from datetime import datetime
+from django.core.urlresolvers import reverse
+import datetime
+from django.utils.timezone import utc
+
+#@decorator
+#def check_if_finished(f, request):
+#    if 'participant' in request.session:
+#        participant = request.session['participant']
+#        if participant.datetime_finished != None:
+#            return redirect(reverse('confirmation'))
+#    return f(request)
 
 @password_required
-def agreement(request):
+def agreement(request): 
+    if 'participant' in request.session:
+        participant = request.session['participant']
+        if participant.datetime_finished != None:
+            return redirect(reverse('confirmation'))
+        
     return render(request, 'portal/agreement.html', {})
 
 @password_required
 def group(request):
+    if 'participant' in request.session:
+        participant = request.session['participant']
+        if participant.datetime_finished != None:
+            return redirect(reverse('confirmation'))
+    
     if not 'participant' in request.session:
         def get_next_group():
             GROUPS = ['t', 'p', 'c']
@@ -25,22 +46,34 @@ def group(request):
             return group
 
         group = get_next_group()
-        participant = Participant.objects.create_participant(group)
-        request.session['participant'] = participant
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        participant = Participant.objects.create_participant(group, now)
+        request.session['participant'] = participant    
         
     if request.session['participant'].group != 'c':
-        page = render(request, 'portal/group.html', {'group': request.session['participant'].group})
+        object_context = {'group': request.session['participant'].group}
+        page = render(request, 'portal/group.html', object_context)
     else: 
-        page = render(request, 'portal/test.html', {})
+        page = redirect(reverse('test'))
     return page
 
 @password_required
-def test(request):
+def test(request): 
+    if 'participant' in request.session:
+        participant = request.session['participant']
+        if participant.datetime_finished != None:
+            return redirect(reverse('confirmation'))
+    
     return render(request, 'portal/test.html', {})
 
 @password_required
-def survey(request):
-    participant = request.session['participant']    
+def survey(request):   
+    if 'participant' in request.session:
+        participant = request.session['participant']
+        if participant.datetime_finished != None:
+            return redirect(reverse('confirmation'))    
+    
+    participant = request.session['participant']
     if (participant.id % 2) == 0:
         test_id = "PYDQRHK";
     else:    
@@ -50,8 +83,13 @@ def survey(request):
 
 @password_required
 def record(request):
-    participant = request.session['participant']    
-    date = datetime.now().strftime('%Y-%m-%d-%H-%s')
+    if 'participant' in request.session:
+        participant = request.session['participant']
+        if participant.datetime_finished != None:
+            return redirect(reverse('confirmation'))
+    
+    participant = request.session['participant']        
+    date = datetime.datetime.now().strftime('%Y-%m-%d-%H-%S')
     file = open("srtframework/media/results/IAT_%s-%s.txt" % (participant.id, date), 'w')
     file.write(request.GET['data'])
     file.close()
@@ -59,4 +97,7 @@ def record(request):
 
 @password_required
 def confirmation(request):
+    participant = request.session['participant']
+    participant.datetime_finished = datetime.datetime.utcnow().replace(tzinfo=utc)
+    participant.save()
     return render(request, 'portal/confirmation.html', {})

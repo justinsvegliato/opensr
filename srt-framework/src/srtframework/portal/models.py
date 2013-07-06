@@ -1,19 +1,17 @@
 from django.db import models
 
 class ParticipantManager(models.Manager):
-    def create_participant(self, group):
+    def create_participant(self, group, date_time_started):
         participant = self.create(
-            iat_completed=False, 
-            survey_completed=False,
-            d_score=0, 
+            datetime_started = date_time_started,
+            datetime_finished = None,
             group=group
         )
         return participant
 
 class Participant(models.Model):
-    iat_completed = models.BooleanField()
-    survey_completed = models.BooleanField()
-    d_score = models.DecimalField(decimal_places=5, max_digits=10)
+    datetime_started = models.DateTimeField(default=None, null=True);
+    datetime_finished = models.DateTimeField(default=None, null=True)
     
     GROUPS = (
         ('t', 'Text'),

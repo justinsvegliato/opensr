@@ -140,4 +140,4 @@ def parseFiles(iatLines):
 if __name__ == "__main__":
     print "Started parsing files"
     parseFiles(GetLabels())
-    print "Sinished parsing files"
+    print "Finished parsing files"

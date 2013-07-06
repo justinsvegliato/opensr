@@ -17,12 +17,12 @@ function startIAT(data) {
 
     // make the target or association words green
     if (Math.random() < 0.5) {
-        openA = "<font color=green>";
+        openA = "<font>";
         closeA = "</font>";
         open1 = "";
         close1 = "";
     } else {
-        open1 = "<font color=green>";
+        open1 = "<font>";
         close1 = "</font>";
         openA = "";
         closeA = "";
@@ -79,27 +79,43 @@ function IATround() {
 function initRounds() {
     var roundArray = [];
     // for each session
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 4; i++) {
         roundArray[i] = [];
+//        switch (i) {
+//            case 0:
+//            case 4:
+//                stype = "target";
+//                numrounds = 5;
+//                break;
+//            case 1:
+//                stype = "association";
+//                numrounds = 5;
+//                break;
+//            case 2:
+//            case 3:
+//            case 5:
+//            case 6:
+//                stype = "both";
+//                numrounds = 5;
+//                break;
+//
+//        }
         switch (i) {
             case 0:
-            case 4:
                 stype = "target";
-                numrounds = 20;
+                numrounds = 5;
                 break;
             case 1:
                 stype = "association";
-                numrounds = 20;
+                numrounds = 5;
                 break;
             case 2:
             case 3:
-            case 5:
-            case 6:
                 stype = "both";
-                numrounds = 40;
+                numrounds = 5;
                 break;
-
         }
+
         prevIndexA = -1;
         prevIndex1 = -1;
         for (var j = 0; j < numrounds; j++) {
@@ -123,7 +139,7 @@ function initRounds() {
             // pick a category
             if (round.category == input.catA.datalabel) {
                 round.itemtype = input.catA.itemtype;
-                if (i < 4) {
+                if (i < 3) {
                     round.correct = 1;
                 } else {
                     round.correct = 2;
@@ -138,7 +154,7 @@ function initRounds() {
 
             } else if (round.category == input.catB.datalabel) {
                 round.itemtype = input.catB.itemtype;
-                if (i < 4) {
+                if (i < 3) {
                     round.correct = 2;
                 } else {
                     round.correct = 1;
@@ -178,6 +194,38 @@ function initRounds() {
 
 // insert instruction text based on stage in IAT
 function instructionPage() {
+//    switch (session) {
+//        case 0:
+//            $('#left_cat').ready(function() {
+//                $('#left_cat').html(openA + input.catA.label + closeA);
+//            });
+//            $('#right_cat').ready(function() {
+//                $('#right_cat').html(openA + input.catB.label + closeA);
+//            });
+//            break;
+//        case 1:
+//            $("#left_cat").html(open1 + input.cat1.label + close1);
+//            $("#right_cat").html(open1 + input.cat2.label + close1);
+//            break;
+//        case 2:
+//        case 3:
+//            $("#left_cat").html(openA + input.catA.label + closeA +
+//                    '<br>or<br>' + open1 + input.cat1.label + close1);
+//            $("#right_cat").html(openA + input.catB.label + closeA +
+//                    '<br>or<br>' + open1 + input.cat2.label + close1);
+//            break;
+//        case 4:
+//            $("#left_cat").html(openA + input.catB.label + closeA);
+//            $("#right_cat").html(openA + input.catA.label + closeA);
+//            break;
+//        case 5:
+//        case 6:
+//            $("#left_cat").html(openA + input.catB.label + closeA +
+//                    '<br>or<br>' + open1 + input.cat1.label + close1);
+//            $("#right_cat").html(openA + input.catA.label + closeA +
+//                    '<br>or<br>' + open1 + input.cat2.label + close1);
+//            break;
+//    }
     switch (session) {
         case 0:
             $('#left_cat').ready(function() {
@@ -192,25 +240,19 @@ function instructionPage() {
             $("#right_cat").html(open1 + input.cat2.label + close1);
             break;
         case 2:
-        case 3:
             $("#left_cat").html(openA + input.catA.label + closeA +
                     '<br>or<br>' + open1 + input.cat1.label + close1);
             $("#right_cat").html(openA + input.catB.label + closeA +
                     '<br>or<br>' + open1 + input.cat2.label + close1);
             break;
-        case 4:
-            $("#left_cat").html(openA + input.catB.label + closeA);
-            $("#right_cat").html(openA + input.catA.label + closeA);
-            break;
-        case 5:
-        case 6:
+        case 3:
             $("#left_cat").html(openA + input.catB.label + closeA +
                     '<br>or<br>' + open1 + input.cat1.label + close1);
             $("#right_cat").html(openA + input.catA.label + closeA +
                     '<br>or<br>' + open1 + input.cat2.label + close1);
             break;
     }
-    if (session == 7) {
+    if (session == 4) {
         $("#left_cat").html("");
         $("#right_cat").html("");
         $("#exp_instruct").html("<img src='spinner.gif'>");
@@ -329,7 +371,6 @@ function calculateIAT() {
                 " with " + open1 + input.cat1.label + close1;
         resulttext += " and " + openA + input.catA.label + closeA + " with " +
                 open1 + input.cat2.label + close1 + ".</div>";
-        // resulttext += "<div>incompatible: "+incompatible+" ("+(ivar/39)+"); compatible: "+compatible+" ("+(cvar/39)+"); tvalue: "+tvalue+"</div>";
     } else {
         resulttext =
                 "<div style='text-align:center;padding:20px'>You do not associate " +
@@ -413,8 +454,8 @@ function displayItem() {
 function runSession(kEvent) {
     var rCorrect = roundArray[session][roundnum].correct;
     var unicode = kEvent.keyCode ? kEvent.keyCode : kEvent.charCode;
-    keyE = (unicode == 69 || unicode == 101);
-    keyI = (unicode == 73 || unicode == 105);
+    keyE = (unicode == 70 || unicode == 102);
+    keyI = (unicode == 74 || unicode == 106);
 
     // if correct key (1 & E) or (2 & I)
     if ((rCorrect == 1 && keyE) || (rCorrect == 2 && keyI)) {
