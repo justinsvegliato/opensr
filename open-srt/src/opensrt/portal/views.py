@@ -81,7 +81,14 @@ def test(request):
     test = request.session['test']
     blocks = Block.objects.filter(test=test)
     
-    label_ids = list(sum([[block.left_label_id, block.right_label_id] for block in blocks], []))
+    label_ids = []
+    for block in blocks:
+        label_ids.append(block.primary_left_label_id)
+        label_ids.append(block.primary_right_label_id)
+        if not block.primary_left_label_id is None:
+            label_ids.append(block.secondary_left_label_id)
+        if not block.secondary_right_label_id is None:
+            label_ids.append(block.secondary_right_label_id)
     labels = Label.objects.filter(id__in=label_ids)
     
     anchors = Anchor.objects.filter(label_id__in=label_ids)
@@ -109,8 +116,10 @@ def confirmation(request):
 
 def record(request):
     Result.objects.create_result(
-        request.GET['left_label'], 
-        request.GET['right_label'], 
+        request.GET['primary_left_label'], 
+        request.GET['secondary_left_label'], 
+        request.GET['primary_right_label'],
+        request.GET['secondary_left_label'], 
         request.GET['anchor'], 
         request.GET['reaction_time'], 
         request.GET['correct'] == "true", 

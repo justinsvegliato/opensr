@@ -2,8 +2,16 @@
     height: 500px;
 }
 #anchor {
-    margin-top: 125px;
     font-size: 25px;
+    position: relative;
+    top: 70px;
+}
+#label-container {
+    height: 150px;
+}
+#key-bind-reminder {
+    position: relative;
+    top: 35px;
 }
 #status {
     margin-top: 105px;
@@ -34,4 +42,8 @@
 }
 #testing-phase-container {
     display: none;
+}
+#left-separator, #right-separator {
+    font-weight: bolder;
+    font-size: 30px;
 }

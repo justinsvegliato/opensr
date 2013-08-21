@@ -7,10 +7,12 @@ class ParticipantManager(models.Manager):
         return self.create(group=group, test=test)
     
 class ResultManager(models.Manager):
-    def create_result(self, right_label, left_label, anchor, reaction_time, correct, participant):
+    def create_result(self, primary_left_label, secondary_left_label, primary_right_label, secondary_right_label, anchor, reaction_time, correct, participant):
         return self.create(
-            right_label=right_label, 
-            left_label=left_label, 
+            primary_left_label=primary_left_label, 
+            secondary_left_label=secondary_left_label,
+            primary_right_label=primary_right_label,
+            secondary_right_label=secondary_right_label,
             anchor=anchor, 
             reaction_time=reaction_time, 
             correct=correct, 
@@ -56,8 +58,10 @@ class Participant(models.Model):
     
 class Result(models.Model):
     # TODO Insert block maybe?
-    right_label = models.CharField(max_length=32)
-    left_label = models.CharField(max_length=32)
+    primary_left_label = models.CharField(max_length=32)
+    secondary_left_label = models.CharField(max_length=32)
+    primary_right_label = models.CharField(max_length=32)
+    secondary_right_label = models.CharField(max_length=32)
     anchor = models.CharField(max_length=32)
     reaction_time = models.DecimalField(max_digits=19, decimal_places=10)
     correct = models.BooleanField()
@@ -75,8 +79,10 @@ class Block(models.Model):
     practice = models.BooleanField(default=False)
     length = models.IntegerField()
     test = models.ForeignKey(Test)
-    right_label = models.ForeignKey(Label, related_name='right label')
-    left_label = models.ForeignKey(Label, related_name='left label')
+    primary_right_label = models.ForeignKey(Label, related_name='primary right label')
+    secondary_right_label = models.ForeignKey(Label, related_name='secondary right label', null=True, blank=True)
+    primary_left_label = models.ForeignKey(Label, related_name='primary left label')
+    secondary_left_label = models.ForeignKey(Label, related_name='secondary left label', null=True, blank=True)
     
 class Anchor(models.Model):
     value = models.CharField(max_length=150)

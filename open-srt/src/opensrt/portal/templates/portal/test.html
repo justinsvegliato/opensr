@@ -19,9 +19,19 @@
         </div>
         
         <div id="testing-phase-container">
-            <div class="row-fluid">
-                <h2 id="left-label" class="span5 text-left"></h2>
-                <h2 id="right-label" class="offset2 span5 text-right"></h2>
+            <div id="label-container" class="row-fluid">
+                <div class="row-fluid">
+                    <h2 id="primary-left-label" class="span5 text-left"></h2>
+                    <h2 id="primary-right-label" class="offset2 span5 text-right"></h2>
+                </div>
+                <div class="row-fluid">
+                    <span id="left-separator" class="span5 text-left">or</span>
+                    <span id="right-separator" class="offset2 span5 text-right">or</span>
+                </div>
+                <div class="row-fluid">
+                    <h2 id="secondary-left-label" class="span5 text-left"></h2>
+                    <h2 id="secondary-right-label" class="offset2 span5 text-right"></h2>
+                </div>
             </div>
 
             <div class="row-fluid">
@@ -32,7 +42,7 @@
                 <img id="status" src="/static/img/wrong.png" alt="Wrong Answer" />
             </div>
             
-            <div class="alert" id="under_instruct">
+            <div class="alert" id="key-bind-reminder">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 Press the <span id="left-key-bind">{{ left_key_bind }}</span> and <span id="right-key-bind">{{ right_key_bind }}</span> keys to sort the item into the left and right categories respectively
             </div>
