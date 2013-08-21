@@ -6,5 +6,6 @@ urlpatterns = patterns('portal.views',
     url(r'^introduction/$', 'introduction', name='introduction'),
     url(r'^group/$', 'group', name='group'),
     url(r'^test/$', 'test', name='test'),
-    url(r'^record/$', 'record_trial', name='record'),
+    url(r'^confirmation/$', 'confirmation', name='confirmation'),
+    url(r'^record/$', 'record', name='record'),
 )

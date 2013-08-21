@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.http import HttpResponse
+from django.contrib.flatpages.models import FlatPage
 from django.shortcuts import (
     render, redirect
 )
@@ -12,8 +13,7 @@ from portal.models import (
 )
 
 def index(request):
-    login_form = LoginForm()
-    
+    login_form = LoginForm()    
     if request.POST:
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -27,11 +27,9 @@ def informed_consent(request):
     object_context = {
         'flatpage': request.session['test'].informed_consent_page,
         'next_page_url': '/introduction/'
-    } 
-    
+    }     
     context_instance = RequestContext(request)
-    context_instance.autoescape=False
-    
+    context_instance.autoescape=False    
     return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
 
 def introduction(request):
@@ -41,10 +39,8 @@ def introduction(request):
             'flatpage': page,
             'next_page_url': '/group/'
         } 
-
         context_instance = RequestContext(request)
         context_instance.autoescape=False
-
         return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
     else:
         return redirect(reverse('group'))
@@ -78,8 +74,7 @@ def group(request):
         'next_page_url': '/test/'
     }
     context_instance = RequestContext(request)
-    context_instance.autoescape=False
-    
+    context_instance.autoescape=False    
     return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
 
 def test(request):
@@ -92,19 +87,27 @@ def test(request):
     anchors = Anchor.objects.filter(label_id__in=label_ids)
     
     context_instance = RequestContext(request)
-    context_instance.autoescape=False
-    
+    context_instance.autoescape=False    
     object_context = {
         'test': serializers.serialize('json', [test]),
         'blocks': serializers.serialize('json', blocks),
         'labels': serializers.serialize('json', labels),
         'anchors': serializers.serialize('json', anchors),
         'left_key_bind': test.left_key_bind.upper(),
-        'right_key_bind': test.right_key_bind.upper()
-    }
+        'right_key_bind': test.right_key_bind.upper(),
+        'next_page_url': '/confirmation/' if not test.survey_url else test.survey_url
+    }  
     return render(request, 'portal/test.html', object_context, context_instance=context_instance)
 
-def record_trial(request):
+def confirmation(request):
+    object_context = {
+        'flatpage': request.session['test'].confirmation_page
+    }     
+    context_instance = RequestContext(request)
+    context_instance.autoescape=False    
+    return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
+
+def record(request):
     Result.objects.create_result(
         request.GET['left_label'], 
         request.GET['right_label'], 
