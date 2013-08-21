@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+<div class="row-fluid">
+    <div class="span3 offset4 well">
+        <h2>Test Selection</h2>
+        <form method="post" action="{% url 'index' %}">
+            {% csrf_token %}
+            {{ login_form.as_p }}
+            <button id="continue" name="continue" type="submit" class="btn btn-primary" disabled>Continue</button>     
+        </form>
+    </div>
+</div>
+{% endblock container %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+$(document).ready(function() {  
+    var attributeHandler = function() {
+        if ($("#test").val() && $("#password").val()) {
+            $("#continue").removeAttr("disabled");
+        } else {
+            $("#continue").attr("disabled", "");
+        };
+    }
+        
+    $("#test").on("change", attributeHandler);
+    $("#password").on("keyup", attributeHandler);
+});
+</script>
+{% endblock javascript %}

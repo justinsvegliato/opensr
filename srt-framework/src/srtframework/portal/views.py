@@ -1,103 +1,116 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
-from django.core.exceptions import ObjectDoesNotExist
-from password_required.decorators import password_required
-from portal.models import Participant
-from datetime import datetime
+from portal.forms import LoginForm
 from django.core.urlresolvers import reverse
-import datetime
-from django.utils.timezone import utc
+from django.template import RequestContext
+from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
+from django.http import HttpResponse
+from django.shortcuts import (
+    render, redirect
+)
+from portal.models import (
+    Test, Group, Participant, Block, Label, Anchor, Result
+)
 
-#@decorator
-#def check_if_finished(f, request):
-#    if 'participant' in request.session:
-#        participant = request.session['participant']
-#        if participant.datetime_finished != None:
-#            return redirect(reverse('confirmation'))
-#    return f(request)
-
-@password_required
-def agreement(request): 
-    if 'participant' in request.session:
-        participant = request.session['participant']
-        if participant.datetime_finished != None:
-            return redirect(reverse('confirmation'))
+def index(request):
+    login_form = LoginForm()
+    
+    if request.POST:
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            request.session['test'] = Test.objects.get(id=request.POST['test'])
+            return redirect(reverse('informed_consent'))
         
-    return render(request, 'portal/agreement.html', {})
+    object_context = {'login_form': login_form}
+    return render(request, 'portal/index.html', object_context)
 
-@password_required
+def informed_consent(request):
+    object_context = {
+        'flatpage': request.session['test'].informed_consent_page,
+        'next_page_url': '/introduction/'
+    } 
+    
+    context_instance = RequestContext(request)
+    context_instance.autoescape=False
+    
+    return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
+
+def introduction(request):
+    page = request.session['test'].introduction_page
+    if page:
+        object_context = {
+            'flatpage': page,
+            'next_page_url': '/group/'
+        } 
+
+        context_instance = RequestContext(request)
+        context_instance.autoescape=False
+
+        return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
+    else:
+        return redirect(reverse('group'))
+
 def group(request):
-    if 'participant' in request.session:
-        participant = request.session['participant']
-        if participant.datetime_finished != None:
-            return redirect(reverse('confirmation'))
+    test = request.session['test']
+    groups = Group.objects.filter(test=test).order_by('id')
+
+    if not len(groups):
+        return redirect(reverse('test'))
     
-    if not 'participant' in request.session:
-        def get_next_group():
-            GROUPS = ['t', 'p', 'c']
-            try:
-                latest_group = Participant.objects.latest('id').group
-                latest_group_index = GROUPS.index(latest_group)
-                if (latest_group_index + 1 < len(GROUPS)):
-                    group = GROUPS[latest_group_index + 1]
-                else:
-                    group = GROUPS[0]
-            except ObjectDoesNotExist:
-                group = GROUPS[0]
-            return group
-
-        group = get_next_group()
-        now = datetime.datetime.utcnow().replace(tzinfo=utc)
-        participant = Participant.objects.create_participant(group, now)
-        request.session['participant'] = participant    
-        
-    if request.session['participant'].group != 'c':
-        object_context = {'group': request.session['participant'].group}
-        page = render(request, 'portal/group.html', object_context)
-    else: 
-        page = redirect(reverse('test'))
-    return page
-
-@password_required
-def test(request): 
-    if 'participant' in request.session:
-        participant = request.session['participant']
-        if participant.datetime_finished != None:
-            return redirect(reverse('confirmation'))
+    def get_next_group():
+        try:
+            latest_group_id = Participant.objects.latest('id').group.id
+            for i in range(len(groups)):
+                if groups[i].id == latest_group_id:
+                   return groups[0] if (i == (len(groups) - 1)) else groups[i + 1]
+        except ObjectDoesNotExist:
+            return groups[0]
     
-    return render(request, 'portal/test.html', {})
-
-@password_required
-def survey(request):   
-    if 'participant' in request.session:
-        participant = request.session['participant']
-        if participant.datetime_finished != None:
-            return redirect(reverse('confirmation'))    
+    group = get_next_group()
     
-    participant = request.session['participant']
-    if (participant.id % 2) == 0:
-        test_id = "PYDQRHK";
-    else:    
-        test_id = "T2YYKYX"
-    address = 'http://www.surveymonkey.com/s/%s?c=%d' % (test_id, participant.id)
-    return HttpResponseRedirect(address)
-
-@password_required
-def record(request):
-    if 'participant' in request.session:
-        participant = request.session['participant']
-        if participant.datetime_finished != None:
-            return redirect(reverse('confirmation'))
+    participant = Participant.objects.create_participant(group, test)
+    request.session['participant'] = participant
     
-    participant = request.session['participant']        
-    date = datetime.datetime.now().strftime('%Y-%m-%d-%H-%S')
-    file = open("srtframework/media/results/IAT_%s-%s.txt" % (participant.id, date), 'w')
-    file.write(request.GET['data'])
-    file.close()
-    return render(request, 'portal/test.html', {})
+    if not group.page:
+        return redirect(reverse('test'))
+    
+    object_context = {
+        'flatpage': group.page,
+        'next_page_url': '/test/'
+    }
+    context_instance = RequestContext(request)
+    context_instance.autoescape=False
+    
+    return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
 
-@password_required
-def confirmation(request):
-    participant = request.session['participant']
-    participant.datetime_finished = datetime.datetime.utcnow().replace(tzinfo=utc)
-    participant.save()
-    return render(request, 'portal/confirmation.html', {})
+def test(request):
+    test = request.session['test']
+    blocks = Block.objects.filter(test=test)
+    
+    label_ids = list(sum([[block.left_label_id, block.right_label_id] for block in blocks], []))
+    labels = Label.objects.filter(id__in=label_ids)
+    
+    anchors = Anchor.objects.filter(label_id__in=label_ids)
+    
+    context_instance = RequestContext(request)
+    context_instance.autoescape=False
+    
+    object_context = {
+        'test': serializers.serialize('json', [test]),
+        'blocks': serializers.serialize('json', blocks),
+        'labels': serializers.serialize('json', labels),
+        'anchors': serializers.serialize('json', anchors),
+        'left_key_bind': test.left_key_bind.upper(),
+        'right_key_bind': test.right_key_bind.upper()
+    }
+    return render(request, 'portal/test.html', object_context, context_instance=context_instance)
+
+def record_trial(request):
+    Result.objects.create_result(
+        request.GET['left_label'], 
+        request.GET['right_label'], 
+        request.GET['anchor'], 
+        request.GET['reaction_time'], 
+        request.GET['correct'] == "true", 
+        request.session['participant']
+    )
+    return HttpResponse('')

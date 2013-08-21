@@ -51,7 +51,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     get_absolute_url('static'),
-    get_absolute_url('static'),
 )
 
 STATICFILES_FINDERS = (
@@ -96,19 +95,20 @@ TEMPLATE_DIRS = (
     get_absolute_url('templates'),
 )
 
-PASSWORD_REQUIRED_PASSWORD = 'mason42607'
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.flatpages',
-    #'django.contrib.sites',
+    'django.contrib.flatpages',
+    'django.contrib.sites',
     'django.contrib.messages',
+    'nested_inlines',
     'django.contrib.admin',
     'portal',
-    'password_required',
+    'tinymce',
+    'colorfield',
 )
 
 LOGGING = {
@@ -135,8 +135,12 @@ LOGGING = {
     }
 }
 
-# Questions
-# Data storage for IAT/Surveymonkey?
-# One-to-one relationship between IAT and group?
-# Data presentation?
-# Creation of new group/IAT?
+TINYMCE_JS_URL = '/static/tiny_mce/tiny_mce_src.js'
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+TINYMCE_SPELLCHECKER = False
+TINYMCE_COMPRESSOR = False

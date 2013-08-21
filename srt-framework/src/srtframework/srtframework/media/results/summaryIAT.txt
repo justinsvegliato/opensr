@@ -1,7 +1,0 @@
-10,"label": "Female",,nan,140.8,nan
-11,"label": "Female",,nan,208.0,nan
-12,"label": "Female",,nan,137.2,nan
-7,"label": "Female",,nan,163.4,nan
-8,"label": "Female",,nan,4052.2,nan
-8,"label": "Female",,nan,131.0,nan
-9,"label": "Female",,nan,2484.0,nan
