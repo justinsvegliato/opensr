@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block container %}
+<div class="row-fluid">
+    <div class="span12 well">
+    <h2>{{ flatpage.title }}</h2>
+    <p>{{ flatpage.content }}</p>
+    {% if next_page_url %}
+    <a href="{{ next_page_url }}" class="btn btn-primary" type="button">Next &rarr;</a> 
+    {% endif %}
+    </div>
+</div>
+{% endblock container %}

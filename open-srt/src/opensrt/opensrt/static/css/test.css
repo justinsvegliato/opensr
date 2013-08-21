@@ -1,0 +1,37 @@
+#container {
+    height: 500px;
+}
+#anchor {
+    margin-top: 125px;
+    font-size: 25px;
+}
+#status {
+    margin-top: 105px;
+    margin-bottom: 40px;
+    height: 60px;
+}
+#start-hint {
+    font-weight: bolder;
+    font-size: 25px;
+    position: relative;
+    top: 320px;
+}
+#left-key-bind, #right-key-bind {
+    font-weight: bolder;       
+}
+#termination-phase-container {
+    display: none;
+    height: 100%
+}
+#thank-you-message {
+    font-weight: bolder;
+    position: relative;
+    top: 40%;
+    font-size: 25px;
+}
+#status {
+    visibility: hidden;
+}
+#testing-phase-container {
+    display: none;
+}
