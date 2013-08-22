@@ -1,27 +1,42 @@
-from portal.forms import LoginForm
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.http import HttpResponse
-from django.contrib.flatpages.models import FlatPage
 from django.shortcuts import (
     render, redirect
 )
 from portal.models import (
     Test, Group, Participant, Block, Category, Anchor, Trial
 )
+from portal.forms import (
+    IndexLoginForm, TestSelectionLoginForm
+)
 
-def index(request):
-    login_form = LoginForm()    
+def index(request, test_id):
+    login_form = IndexLoginForm()    
     if request.POST:
-        login_form = LoginForm(request.POST)
+        login_form = IndexLoginForm(request.POST, test_id=test_id)
+        if login_form.is_valid():
+            request.session['test'] = Test.objects.get(id=test_id)
+            return redirect(reverse('informed_consent'))
+        
+    object_context = {
+    'login_form': login_form,
+    'test_id': test_id
+    }
+    return render(request, 'portal/index.html', object_context)   
+ 
+def test_selection(request):
+    login_form = TestSelectionLoginForm()    
+    if request.POST:
+        login_form = TestSelectionLoginForm(request.POST)
         if login_form.is_valid():
             request.session['test'] = Test.objects.get(id=request.POST['test'])
             return redirect(reverse('informed_consent'))
         
     object_context = {'login_form': login_form}
-    return render(request, 'portal/index.html', object_context)
+    return render(request, 'portal/test-selection.html', object_context)    
 
 def informed_consent(request):
     object_context = {
@@ -59,8 +74,7 @@ def group(request):
                 if groups[i].id == latest_group_id:
                    return groups[0] if (i == (len(groups) - 1)) else groups[i + 1]
         except ObjectDoesNotExist:
-            return groups[0]
-    
+            return groups[0]    
     group = get_next_group()
     
     participant = Participant.objects.create_participant(group, test)
@@ -79,8 +93,7 @@ def group(request):
 
 def test(request):
     test = request.session['test']
-    blocks = Block.objects.filter(test=test)
-    
+    blocks = Block.objects.filter(test=test)   
     category_ids = []
     for block in blocks:
         category_ids.append(block.primary_left_category_id)
@@ -89,8 +102,7 @@ def test(request):
             category_ids.append(block.secondary_left_category_id)
         if not block.secondary_right_category_id is None:
             category_ids.append(block.secondary_right_category_id)
-    categories = Category.objects.filter(id__in=category_ids)
-    
+    categories = Category.objects.filter(id__in=category_ids)    
     anchors = Anchor.objects.filter(category_id__in=category_ids)
     
     context_instance = RequestContext(request)

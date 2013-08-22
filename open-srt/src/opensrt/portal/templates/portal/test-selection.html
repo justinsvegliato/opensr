@@ -4,8 +4,8 @@
 {% block container %}
 <div class="row-fluid">
     <div class="span3 offset4 well">
-        <h2>Sign In</h2>
-        <form method="post" action="{% url 'index' test_id %}">
+        <h2>Test Selection</h2>
+        <form method="post" action="{% url 'test_selection' %}">
             {% csrf_token %}
             {{ login_form.as_p }}
             <button id="continue" name="continue" type="submit" class="btn btn-primary" disabled>Continue</button>     
@@ -16,5 +16,5 @@
 
 
 {% block javascript %}
-<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/test-selection.js' %}"></script>
 {% endblock javascript %}
