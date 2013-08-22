@@ -41,11 +41,11 @@ USE_L10N = True
  
 USE_TZ = True
 
-MEDIA_ROOT = ''
+MEDIA_ROOT = 'opensr/media/'
 
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = ''
+STATIC_ROOT = '/static/'
 
 STATIC_URL = '/static/'
 
@@ -89,7 +89,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'opensr.urls'
 
-#WSGI_APPLICATION = 'srtframework.wsgi.application'
+#WSGI_APPLICATION = 'opensr.wsgi.application'
 
 TEMPLATE_DIRS = (
     get_absolute_url('templates'),

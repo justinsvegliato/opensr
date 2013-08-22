@@ -3,11 +3,13 @@ from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.http import HttpResponse
+from django.conf import settings
 from django.shortcuts import (
     render, redirect
 )
+from itertools import chain
 from portal.models import (
-    Test, Group, Participant, Block, Category, Anchor, Trial
+    Test, Group, Participant, Block, Category, ImageAnchor, TextAnchor, Trial
 )
 from portal.forms import (
     IndexLoginForm, EntranceLoginForm
@@ -94,6 +96,7 @@ def group(request):
 def test(request):
     test = request.session['test']
     blocks = Block.objects.filter(test=test)   
+    
     category_ids = []
     for block in blocks:
         category_ids.append(block.primary_left_category_id)
@@ -103,7 +106,10 @@ def test(request):
         if not block.secondary_right_category_id is None:
             category_ids.append(block.secondary_right_category_id)
     categories = Category.objects.filter(id__in=category_ids)    
-    anchors = Anchor.objects.filter(category_id__in=category_ids)
+    
+    image_anchors = ImageAnchor.objects.filter(category_id__in=category_ids)
+    text_anchors = TextAnchor.objects.filter(category_id__in=category_ids)
+    anchors = list(chain(image_anchors, text_anchors))
     
     context_instance = RequestContext(request)
     context_instance.autoescape=False    
@@ -114,7 +120,8 @@ def test(request):
         'anchors': serializers.serialize('json', anchors),
         'left_key_bind': test.left_key_bind.upper(),
         'right_key_bind': test.right_key_bind.upper(),
-        'next_page_url': '/confirmation/' if not test.survey_url else test.survey_url
+        'next_page_url': '/confirmation/' if not test.survey_url else test.survey_url,
+        'media_url': settings.MEDIA_URL
     }  
     return render(request, 'portal/test.html', object_context, context_instance=context_instance)
 

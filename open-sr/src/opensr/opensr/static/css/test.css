@@ -3,18 +3,14 @@
 }
 #anchor {
     font-size: 25px;
-    position: relative;
-    top: 70px;
+    height: 150px;
 }
 #category-container {
     height: 150px;
 }
-#key-bind-reminder {
-    position: relative;
-    top: 35px;
-}
+
 #status {
-    margin-top: 105px;
+    margin-top: 30px;
     margin-bottom: 40px;
     height: 60px;
 }
@@ -46,4 +42,11 @@
 #left-separator, #right-separator {
     font-weight: bolder;
     font-size: 30px;
+}
+.image-anchor {
+    height: 150px;
+}
+.text-anchor {
+    display: inline-block;
+    margin-top: 25%
 }

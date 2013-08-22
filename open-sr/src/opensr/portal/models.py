@@ -96,16 +96,21 @@ class Block(models.Model):
     
     def __unicode__(self):
         return self.name
-    
+
 class Anchor(models.Model):
-    value = models.CharField(max_length=150)    
-    ANCHOR_TYPE = (
-        ('AUDIO', 'Audio'),
-        ('IMAGE', 'Image'),
-        ('TEXT', 'Text')
-    )   
-    anchor_type = models.CharField(max_length=10, choices=ANCHOR_TYPE)    
     category = models.ForeignKey(Category)
+    
+    class Meta:
+        abstract = True
+    
+class ImageAnchor(Anchor):
+    value = models.ImageField(upload_to="images/")
+    
+    def __unicode__(self):
+        return self.value
+    
+class TextAnchor(Anchor):
+    value = models.CharField(max_length=150)   
     
     def __unicode__(self):
         return self.value

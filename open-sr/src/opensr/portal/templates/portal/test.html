@@ -35,7 +35,7 @@
             </div>
 
             <div class="row-fluid">
-                <span id="anchor" class="offset4 span4 text-center"></span>
+                <div id="anchor" class="offset4 span4 text-center"></div>
             </div>
 
             <div class="row-fluid text-center">
@@ -59,8 +59,6 @@
                 <a href="{{ next_page_url }}" class="btn btn-primary" type="button">Next &rarr;</a>
             </span>
         </div>
-        
-        <div id="debugger"></div>
     </div>
 </div>
 {% endblock container %}
@@ -71,6 +69,7 @@
     var blocks = {{ blocks }};
     var categories = {{ categories }};
     var anchors = {{ anchors }};
+    var media_url = {{ media_url }};
 </script>
 <script src="{% static 'js/test.js' %}"></script>
 {% endblock javascript %}

@@ -61,7 +61,10 @@ function handleAnchor(leftCategories, rightCategories) {
         return $.inArray(n.fields.category, categoryIds) >= 0;
     });
     var anchor = filteredAnchors[Math.floor(Math.random() * filteredAnchors.length)];
-    $("#anchor").html(anchor.fields.value);
+    var html = (anchor.model === "portal.imageanchor") 
+          ? '<img class="image-anchor" src="' + media_url + anchor.fields.value + '" alt="picture" />'
+          : '<span class="text-anchor">' + anchor.fields.value + "</span>";
+    $("#anchor").html(html);
     return anchor;
 }
 
