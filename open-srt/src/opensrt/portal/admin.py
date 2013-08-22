@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
 from portal.models import (
-    Test, Block, Anchor, Group, Label
+    Test, Block, Anchor, Group, Category
 )
 from django.contrib.flatpages.admin import (
     FlatpageForm, FlatPageAdmin
@@ -30,14 +30,14 @@ class PageForm(FlatpageForm):
             })
         }
 
-class LabelAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     inlines = [
         AnchorInline
     ]
 
 class AnchorAdmin(admin.ModelAdmin):    
-    list_display = ('value', 'anchor_type', 'label')
+    list_display = ('value', 'anchor_type', 'category')
     
 class TestAdmin(admin.ModelAdmin):    
     list_display = ('name', 'is_active')
@@ -50,6 +50,6 @@ class PageAdmin(FlatPageAdmin):
     
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, PageAdmin)
-admin.site.register(Label, LabelAdmin)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(Anchor, AnchorAdmin)

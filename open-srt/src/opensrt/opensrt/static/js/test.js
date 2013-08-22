@@ -21,9 +21,9 @@ $(document).ready(function() {
             if (keyPressed === START_KEY_BIND && phase === Phase.INSTRUCTION) {
                 initializeTestingPhase();
             } else if ($.inArray(keyPressed, LEFT_KEY_BINDS.concat(RIGHT_KEY_BINDS)) >= 0 && phase === Phase.TESTING) {
-                var correctRightLabel = $.inArray(keyPressed, RIGHT_KEY_BINDS) >= 0 && $.inArray(anchor.fields.label, getIds(rightLabels)) >= 0;
-                var correctLeftLabel = $.inArray(keyPressed, LEFT_KEY_BINDS) >= 0 && $.inArray(anchor.fields.label, getIds(leftLabels)) >= 0;
-                if (correctRightLabel || correctLeftLabel) {
+                var correctRightCategory = $.inArray(keyPressed, RIGHT_KEY_BINDS) >= 0 && $.inArray(anchor.fields.category, getIds(rightCategories)) >= 0;
+                var correctLeftCategory = $.inArray(keyPressed, LEFT_KEY_BINDS) >= 0 && $.inArray(anchor.fields.category, getIds(leftCategories)) >= 0;
+                if (correctRightCategory || correctLeftCategory) {
                     handleCorrectAnswer();
                     if (anchorCount > block.fields.length) {
                         if (blocks.length > 0) {
@@ -55,28 +55,28 @@ function handleBlock() {
     }
 }
 
-function handleAnchor(leftLabels, rightLabels) {
-    var labelIds = getIds(leftLabels).concat(getIds(rightLabels));
+function handleAnchor(leftCategories, rightCategories) {
+    var categoryIds = getIds(leftCategories).concat(getIds(rightCategories));
     var filteredAnchors = $.grep(anchors, function(n) {
-        return $.inArray(n.fields.label, labelIds) >= 0;
+        return $.inArray(n.fields.category, categoryIds) >= 0;
     });
     var anchor = filteredAnchors[Math.floor(Math.random() * filteredAnchors.length)];
     $("#anchor").html(anchor.fields.value);
     return anchor;
 }
 
-function handleLabel(block, labelType) {
-    var filteredLabels = $.grep(labels, function(n) {
-        return n.pk === block.fields["primary_" + labelType + "_label"] || n.pk === block.fields["secondary_" + labelType + "_label"];
+function handleCategory(block, categoryType) {
+    var filteredCategories = $.grep(categories, function(n) {
+        return n.pk === block.fields["primary_" + categoryType + "_category"] || n.pk === block.fields["secondary_" + categoryType + "_category"];
     });
-    $("#primary-" + labelType + "-label").html(filteredLabels[0].fields.name).css("color", filteredLabels[0].fields.color);
-    if (filteredLabels.length > 1) {
-        $("#secondary-" + labelType + "-label").html(filteredLabels[1].fields.name).css("color", filteredLabels[1].fields.color);
-        $("#" + labelType + "-separator").show();
+    $("#primary-" + categoryType + "-category").html(filteredCategories[0].fields.name).css("color", filteredCategories[0].fields.color);
+    if (filteredCategories.length > 1) {
+        $("#secondary-" + categoryType + "-category").html(filteredCategories[1].fields.name).css("color", filteredCategories[1].fields.color);
+        $("#" + categoryType + "-separator").show();
     } else {
-        $("#" + labelType + "-separator").hide();
+        $("#" + categoryType + "-separator").hide();
     }
-    return filteredLabels;
+    return filteredCategories;
 }
 
 function initializeTerminationPhase() {
@@ -96,9 +96,9 @@ function initializeInstructionPhase() {
 
 function initializeTestingPhase() {
     phase = Phase.TESTING;
-    leftLabels = handleLabel(block, "left");
-    rightLabels = handleLabel(block, "right");
-    anchor = handleAnchor(leftLabels, rightLabels);
+    leftCategories = handleCategory(block, "left");
+    rightCategories = handleCategory(block, "right");
+    anchor = handleAnchor(leftCategories, rightCategories);
     previousAnchor = anchor;
     anchorCount = 1;
     startTime = new Date().getTime();
@@ -108,12 +108,12 @@ function initializeTestingPhase() {
 }
 
 function handleCorrectAnswer() {
-    function record(leftLabels, rightLabels, anchor, reactionTime, correct) {
+    function record(leftCategories, rightCategories, anchor, reactionTime, correct) {
         data = {
-            "primary_left_label": leftLabels[0].fields.name,
-            "secondary_left_label": leftLabels > 1 ? leftLabels[1].fields.name : null,
-            "primary_right_label": rightLabels[0].fields.name,
-            "secondary_right_label": rightLabels > 1 ? rightLabels[1].fields.name : null,
+            "primary_left_category": leftCategories[0].fields.name,
+            "secondary_left_category": leftCategories > 1 ? leftCategories[1].fields.name : null,
+            "primary_right_category": rightCategories[0].fields.name,
+            "secondary_right_category": rightCategories > 1 ? rightCategories[1].fields.name : null,
             "anchor": anchor.fields.value,
             "reaction_time": reactionTime,
             "correct": correct
@@ -121,10 +121,10 @@ function handleCorrectAnswer() {
         $.get("../record/", data);
     }
 
-    record(leftLabels, rightLabels, anchor, new Date().getTime() - startTime, correct);
+    record(leftCategories, rightCategories, anchor, new Date().getTime() - startTime, correct);
     startTime = new Date().getTime();
     while (anchor === previousAnchor) {
-         anchor = handleAnchor(leftLabels, rightLabels);
+         anchor = handleAnchor(leftCategories, rightCategories);
     }
     previousAnchor = anchor;
     anchorCount++;

@@ -9,7 +9,7 @@ from django.shortcuts import (
     render, redirect
 )
 from portal.models import (
-    Test, Group, Participant, Block, Label, Anchor, Result
+    Test, Group, Participant, Block, Category, Anchor, Trial
 )
 
 def index(request):
@@ -81,24 +81,24 @@ def test(request):
     test = request.session['test']
     blocks = Block.objects.filter(test=test)
     
-    label_ids = []
+    category_ids = []
     for block in blocks:
-        label_ids.append(block.primary_left_label_id)
-        label_ids.append(block.primary_right_label_id)
-        if not block.primary_left_label_id is None:
-            label_ids.append(block.secondary_left_label_id)
-        if not block.secondary_right_label_id is None:
-            label_ids.append(block.secondary_right_label_id)
-    labels = Label.objects.filter(id__in=label_ids)
+        category_ids.append(block.primary_left_category_id)
+        category_ids.append(block.primary_right_category_id)
+        if not block.primary_left_category_id is None:
+            category_ids.append(block.secondary_left_category_id)
+        if not block.secondary_right_category_id is None:
+            category_ids.append(block.secondary_right_category_id)
+    categories = Category.objects.filter(id__in=category_ids)
     
-    anchors = Anchor.objects.filter(label_id__in=label_ids)
+    anchors = Anchor.objects.filter(category_id__in=category_ids)
     
     context_instance = RequestContext(request)
     context_instance.autoescape=False    
     object_context = {
         'test': serializers.serialize('json', [test]),
         'blocks': serializers.serialize('json', blocks),
-        'labels': serializers.serialize('json', labels),
+        'categories': serializers.serialize('json', categories),
         'anchors': serializers.serialize('json', anchors),
         'left_key_bind': test.left_key_bind.upper(),
         'right_key_bind': test.right_key_bind.upper(),
@@ -115,11 +115,11 @@ def confirmation(request):
     return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
 
 def record(request):
-    Result.objects.create_result(
-        request.GET['primary_left_label'], 
-        request.GET['secondary_left_label'], 
-        request.GET['primary_right_label'],
-        request.GET['secondary_left_label'], 
+    Trial.objects.create_result(
+        request.GET['primary_left_category'], 
+        request.GET['secondary_left_category'], 
+        request.GET['primary_right_category'],
+        request.GET['secondary_left_category'], 
         request.GET['anchor'], 
         request.GET['reaction_time'], 
         request.GET['correct'] == "true", 

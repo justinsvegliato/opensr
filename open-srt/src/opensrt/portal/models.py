@@ -7,12 +7,12 @@ class ParticipantManager(models.Manager):
         return self.create(group=group, test=test)
     
 class ResultManager(models.Manager):
-    def create_result(self, primary_left_label, secondary_left_label, primary_right_label, secondary_right_label, anchor, reaction_time, correct, participant):
+    def create_result(self, primary_left_category, secondary_left_category, primary_right_category, secondary_right_category, anchor, reaction_time, correct, participant):
         return self.create(
-            primary_left_label=primary_left_label, 
-            secondary_left_label=secondary_left_label,
-            primary_right_label=primary_right_label,
-            secondary_right_label=secondary_right_label,
+            primary_left_category=primary_left_category, 
+            secondary_left_category=secondary_left_category,
+            primary_right_category=primary_right_category,
+            secondary_right_category=secondary_right_category,
             anchor=anchor, 
             reaction_time=reaction_time, 
             correct=correct, 
@@ -63,19 +63,19 @@ class Participant(models.Model):
     test = models.ForeignKey(Test)
     objects = ParticipantManager()
     
-class Result(models.Model):
+class Trial(models.Model):
     # TODO Insert block maybe?
-    primary_left_label = models.CharField(max_length=32)
-    secondary_left_label = models.CharField(max_length=32)
-    primary_right_label = models.CharField(max_length=32)
-    secondary_right_label = models.CharField(max_length=32)
+    primary_left_category = models.CharField(max_length=32)
+    secondary_left_category = models.CharField(max_length=32)
+    primary_right_category = models.CharField(max_length=32)
+    secondary_right_category = models.CharField(max_length=32)
     anchor = models.CharField(max_length=32)
     reaction_time = models.DecimalField(max_digits=19, decimal_places=10)
     correct = models.BooleanField()
     participant = models.ForeignKey(Participant)
     objects = ResultManager()
 
-class Label(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=20) 
     color = RGBColorField()
     
@@ -89,10 +89,10 @@ class Block(models.Model):
     practice = models.BooleanField(default=False)
     length = models.IntegerField()
     test = models.ForeignKey(Test)
-    primary_right_label = models.ForeignKey(Label, related_name='primary right label')
-    secondary_right_label = models.ForeignKey(Label, related_name='secondary right label', null=True, blank=True)
-    primary_left_label = models.ForeignKey(Label, related_name='primary left label')
-    secondary_left_label = models.ForeignKey(Label, related_name='secondary left label', null=True, blank=True)
+    primary_right_category = models.ForeignKey(Category, related_name='primary right category')
+    secondary_right_category = models.ForeignKey(Category, related_name='secondary right category', null=True, blank=True)
+    primary_left_category = models.ForeignKey(Category, related_name='primary left category')
+    secondary_left_category = models.ForeignKey(Category, related_name='secondary left category', null=True, blank=True)
     
     def __unicode__(self):
         return self.name
@@ -105,7 +105,7 @@ class Anchor(models.Model):
         ('TEXT', 'Text')
     )   
     anchor_type = models.CharField(max_length=10, choices=ANCHOR_TYPE)    
-    label = models.ForeignKey(Label)
+    category = models.ForeignKey(Category)
     
     def __unicode__(self):
         return self.value
