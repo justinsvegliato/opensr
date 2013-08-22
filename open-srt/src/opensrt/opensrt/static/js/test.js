@@ -99,6 +99,7 @@ function initializeTestingPhase() {
     leftLabels = handleLabel(block, "left");
     rightLabels = handleLabel(block, "right");
     anchor = handleAnchor(leftLabels, rightLabels);
+    previousAnchor = anchor;
     anchorCount = 1;
     startTime = new Date().getTime();
     correct = true;
@@ -122,7 +123,10 @@ function handleCorrectAnswer() {
 
     record(leftLabels, rightLabels, anchor, new Date().getTime() - startTime, correct);
     startTime = new Date().getTime();
-    anchor = handleAnchor(leftLabels, rightLabels);
+    while (anchor === previousAnchor) {
+         anchor = handleAnchor(leftLabels, rightLabels);
+    }
+    previousAnchor = anchor;
     anchorCount++;
     correct = true;
     $("#status").css("visibility", "hidden");
