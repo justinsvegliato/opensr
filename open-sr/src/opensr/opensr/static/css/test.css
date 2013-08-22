@@ -1,0 +1,49 @@
+#container {
+    height: 500px;
+}
+#anchor {
+    font-size: 25px;
+    position: relative;
+    top: 70px;
+}
+#category-container {
+    height: 150px;
+}
+#key-bind-reminder {
+    position: relative;
+    top: 35px;
+}
+#status {
+    margin-top: 105px;
+    margin-bottom: 40px;
+    height: 60px;
+}
+#start-hint {
+    font-weight: bolder;
+    font-size: 25px;
+    position: relative;
+    top: 320px;
+}
+#left-key-bind, #right-key-bind {
+    font-weight: bolder;       
+}
+#termination-phase-container {
+    display: none;
+    height: 100%
+}
+#thank-you-message {
+    font-weight: bolder;
+    position: relative;
+    top: 40%;
+    font-size: 25px;
+}
+#status {
+    visibility: hidden;
+}
+#testing-phase-container {
+    display: none;
+}
+#left-separator, #right-separator {
+    font-weight: bolder;
+    font-size: 30px;
+}
