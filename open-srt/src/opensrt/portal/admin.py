@@ -10,14 +10,7 @@ from django.contrib.flatpages.admin import (
 
 class AnchorInline(admin.TabularInline):
     model = Anchor 
-    
-class LabelAdmin(admin.ModelAdmin):
-    inlines = [
-        AnchorInline
-    ]
-    
-admin.site.register(Label, LabelAdmin)
-        
+            
 class GroupInline(admin.StackedInline):
     model = Group
     extra = 1
@@ -26,13 +19,6 @@ class BlockInline(admin.StackedInline):
     model = Block
     extra = 1
     
-class TestAdmin(admin.ModelAdmin):    
-    inlines = [
-        GroupInline, BlockInline
-    ]    
-    
-admin.site.register(Test, TestAdmin)
-
 class PageForm(FlatpageForm):
     class Meta:
         model = FlatPage
@@ -44,8 +30,26 @@ class PageForm(FlatpageForm):
             })
         }
 
+class LabelAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    inlines = [
+        AnchorInline
+    ]
+
+class AnchorAdmin(admin.ModelAdmin):    
+    list_display = ('value', 'anchor_type', 'label')
+    
+class TestAdmin(admin.ModelAdmin):    
+    list_display = ('name', 'is_active')
+    inlines = [
+        GroupInline, BlockInline
+    ]    
+
 class PageAdmin(FlatPageAdmin):
     form = PageForm
     
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, PageAdmin)
+admin.site.register(Label, LabelAdmin)
+admin.site.register(Test, TestAdmin)
+admin.site.register(Anchor, AnchorAdmin)

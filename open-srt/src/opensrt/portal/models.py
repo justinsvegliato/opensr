@@ -23,6 +23,9 @@ class Confirmation(models.Model):
     title = models.CharField(max_length=32)
     body = models.TextField()
     
+    def __unicode__(self):
+        return self.title
+    
 class Test(models.Model):
     name = models.CharField(max_length=32)
     introduction_page = models.ForeignKey(FlatPage, primary_key=False, related_name='test page', null=True, blank=True)
@@ -32,8 +35,7 @@ class Test(models.Model):
     is_active = models.BooleanField(default=True)
     left_key_bind = models.CharField(max_length=1)
     right_key_bind = models.CharField(max_length=1)
-    survey_url = models.URLField(null=True, blank=True)
-    
+    survey_url = models.URLField(null=True, blank=True)    
     TIME_INCREMENT_OPTIONS = (
         ('SECOND', 'Seconds'),
         ('DECISECOND', 'Deciseconds'),
@@ -41,14 +43,19 @@ class Test(models.Model):
         ('MILLISECOND', 'Milliseconds'),
         ('MICROSECOND', 'Microseconds')
     )   
-    time_increment = models.CharField(max_length=15, choices=TIME_INCREMENT_OPTIONS)
-    
+    time_increment = models.CharField(max_length=15, choices=TIME_INCREMENT_OPTIONS)    
     confirmation_page = models.ForeignKey(FlatPage, primary_key=False, related_name='confirmation page')
+    
+    def __unicode__(self):
+        return self.name
     
 class Group(models.Model):
     name = models.CharField(max_length=32)
     page = models.ForeignKey(FlatPage, primary_key=False, related_name='group page', null=True, blank=True)
     test = models.ForeignKey(Test)
+    
+    def __unicode__(self):
+        return self.name
     
 class Participant(models.Model):
     group = models.ForeignKey(Group, null=True)
@@ -72,6 +79,9 @@ class Label(models.Model):
     name = models.CharField(max_length=20) 
     color = RGBColorField()
     
+    def __unicode__(self):
+        return self.name
+    
 class Block(models.Model):
     name = models.CharField(max_length=32)
     instructions = models.TextField()
@@ -84,14 +94,18 @@ class Block(models.Model):
     primary_left_label = models.ForeignKey(Label, related_name='primary left label')
     secondary_left_label = models.ForeignKey(Label, related_name='secondary left label', null=True, blank=True)
     
-class Anchor(models.Model):
-    value = models.CharField(max_length=150)
+    def __unicode__(self):
+        return self.name
     
+class Anchor(models.Model):
+    value = models.CharField(max_length=150)    
     ANCHOR_TYPE = (
         ('AUDIO', 'Audio'),
         ('IMAGE', 'Image'),
         ('TEXT', 'Text')
     )   
-    anchor_type = models.CharField(max_length=10, choices=ANCHOR_TYPE)
-    
+    anchor_type = models.CharField(max_length=10, choices=ANCHOR_TYPE)    
     label = models.ForeignKey(Label)
+    
+    def __unicode__(self):
+        return self.value
