@@ -11,25 +11,31 @@ $(document).ready(function() {
 
     $(document).keypress(function(event) {
         if (phase !== phase.TERMINATION) {
-            var keyPressed = (event.keyCode ? event.keyCode : event.which);
+            var keyPressed = event.keyCode ? event.keyCode : event.which;
             var START_KEY_BIND = 32;
-            var RIGHT_KEY_BIND = test[0].fields.right_key_bind.charCodeAt(0);
-            var LEFT_KEY_BIND = test[0].fields.left_key_bind.charCodeAt(0);
+            var LEFT_KEY_BINDS = [
+                test[0].fields.left_key_bind.toLowerCase().charCodeAt(0),
+                test[0].fields.left_key_bind.toUpperCase().charCodeAt(0)
+            ]
+            var RIGHT_KEY_BINDS = [
+                test[0].fields.right_key_bind.toLowerCase().charCodeAt(0), 
+                test[0].fields.right_key_bind.toUpperCase().charCodeAt(0)
+            ]
             if (keyPressed === START_KEY_BIND && phase === Phase.INSTRUCTION) {
                 phase = Phase.TESTING;
                 $("#instruction-phase-container").hide();
                 $("#testing-phase-container").show();
-                leftLabels = handleLeftLabel(block);
-                rightLabels = handleRightLabel(block);
+                leftLabels = handleLabel(block, "left");
+                rightLabels = handleLabel(block, "right");
                 anchor = handleAnchor(leftLabels, rightLabels);
                 anchorCount = 1;
                 startTime = new Date().getTime();
                 correct = true;
-            } else if ((keyPressed === RIGHT_KEY_BIND || keyPressed === LEFT_KEY_BIND) && phase === Phase.TESTING) {
+            } else if ($.inArray(keyPressed, LEFT_KEY_BINDS.concat(RIGHT_KEY_BINDS)) >= 0 && phase === Phase.TESTING) {
                 if (anchorCount < block.fields.length + 1) {
                     var anchorLabelId = anchor.fields.label;
-                    if ((keyPressed === RIGHT_KEY_BIND && $.inArray(anchorLabelId, getIds(rightLabels)) >= 0)
-                            || (keyPressed === LEFT_KEY_BIND && $.inArray(anchorLabelId, getIds(leftLabels)) >= 0)) {
+                    if (($.inArray(keyPressed, RIGHT_KEY_BINDS) >= 0 && $.inArray(anchorLabelId, getIds(rightLabels)) >= 0)
+                            || ($.inArray(keyPressed, LEFT_KEY_BINDS) >= 0 && $.inArray(anchorLabelId, getIds(leftLabels)) >= 0)) {
                         record(leftLabels, rightLabels, anchor, new Date().getTime() - startTime, correct);
                         startTime = new Date().getTime();
                         anchor = handleAnchor(leftLabels, rightLabels);
@@ -83,34 +89,19 @@ function handleAnchor(leftLabels, rightLabels) {
     return anchor;
 }
 
-function handleLeftLabel(block) {
+function handleLabel(block, labelType) {
     // TODO Replace with inArray
-    var leftLabels = $.grep(labels, function(n) {
-        return n.pk === block.fields.primary_left_label || n.pk === block.fields.secondary_left_label;
+    var filteredLabels = $.grep(labels, function(n) {
+        return n.pk === block.fields["primary_" + labelType + "_label"] || n.pk === block.fields["secondary_" + labelType + "_label"];
     });
-    $("#primary-left-label").html(leftLabels[0].fields.name).css("color", "#" + leftLabels[0].fields.color);
-    if (leftLabels.length > 1) {
-        $("#secondary-left-label").html(leftLabels[1].fields.name).css("color", "#" + leftLabels[1].fields.color);
-        $("#left-separator").show();
+    $("#primary-" + labelType + "-label").html(filteredLabels[0].fields.name).css("color", "#" + filteredLabels[0].fields.color);
+    if (filteredLabels.length > 1) {
+        $("#secondary-" + labelType + "-label").html(filteredLabels[1].fields.name).css("color", "#" + filteredLabels[1].fields.color);
+        $("#" + labelType + "-separator").show();
     } else {
-        $('#left-separator').hide();
+        $("#" + labelType + "-separator").hide();
     }
-    return leftLabels;
-}
-
-function handleRightLabel(block) {
-    // TODO Replace with inArray
-    var rightLabels = $.grep(labels, function(n) {
-        return n.pk === block.fields.primary_right_label || n.pk === block.fields.secondary_right_label;
-    });
-    $("#primary-right-label").html(rightLabels[0].fields.name).css("color", "#" + rightLabels[0].fields.color);
-    if (rightLabels.length > 1) {
-        $("#secondary-right-label").html(rightLabels[1].fields.name).css("color", "#" + rightLabels[1].fields.color);
-        $("#right-separator").show();
-    } else {
-        $('#right-separator').hide();
-    }
-    return rightLabels;
+    return filteredLabels;
 }
 
 function record(leftLabels, rightLabels, anchor, reactionTime, correct) {
