@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.flatpages.models import FlatPage
-from colorfield.fields import ColorField
+from colorful.fields import RGBColorField
 
 class ParticipantManager(models.Manager):
     def create_participant(self, group, test):
@@ -69,8 +69,8 @@ class Result(models.Model):
     objects = ResultManager()
 
 class Label(models.Model):
-    name = models.CharField(max_length=20)
-    color = ColorField()  
+    name = models.CharField(max_length=20) 
+    color = RGBColorField()
     
 class Block(models.Model):
     name = models.CharField(max_length=32)

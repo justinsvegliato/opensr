@@ -108,7 +108,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'portal',
     'tinymce',
-    'colorfield',
+    'colorful',
 )
 
 LOGGING = {

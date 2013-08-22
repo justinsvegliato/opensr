@@ -16,11 +16,11 @@ $(document).ready(function() {
             var LEFT_KEY_BINDS = [
                 test[0].fields.left_key_bind.toLowerCase().charCodeAt(0),
                 test[0].fields.left_key_bind.toUpperCase().charCodeAt(0)
-            ]
+            ];
             var RIGHT_KEY_BINDS = [
-                test[0].fields.right_key_bind.toLowerCase().charCodeAt(0), 
+                test[0].fields.right_key_bind.toLowerCase().charCodeAt(0),
                 test[0].fields.right_key_bind.toUpperCase().charCodeAt(0)
-            ]
+            ];
             if (keyPressed === START_KEY_BIND && phase === Phase.INSTRUCTION) {
                 phase = Phase.TESTING;
                 $("#instruction-phase-container").hide();
@@ -90,13 +90,12 @@ function handleAnchor(leftLabels, rightLabels) {
 }
 
 function handleLabel(block, labelType) {
-    // TODO Replace with inArray
     var filteredLabels = $.grep(labels, function(n) {
         return n.pk === block.fields["primary_" + labelType + "_label"] || n.pk === block.fields["secondary_" + labelType + "_label"];
     });
-    $("#primary-" + labelType + "-label").html(filteredLabels[0].fields.name).css("color", "#" + filteredLabels[0].fields.color);
+    $("#primary-" + labelType + "-label").html(filteredLabels[0].fields.name).css("color", filteredLabels[0].fields.color);
     if (filteredLabels.length > 1) {
-        $("#secondary-" + labelType + "-label").html(filteredLabels[1].fields.name).css("color", "#" + filteredLabels[1].fields.color);
+        $("#secondary-" + labelType + "-label").html(filteredLabels[1].fields.name).css("color", filteredLabels[1].fields.color);
         $("#" + labelType + "-separator").show();
     } else {
         $("#" + labelType + "-separator").hide();
