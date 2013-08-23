@@ -4,10 +4,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.http import HttpResponse
 from django.conf import settings
+from itertools import chain
 from django.shortcuts import (
     render, redirect
 )
-from itertools import chain
 from portal.models import (
     Test, Group, Participant, Block, Category, ImageAnchor, TextAnchor, Trial
 )
@@ -145,3 +145,9 @@ def record(request):
         request.session['participant']
     )
     return HttpResponse('')
+
+# Fix data recording
+# Add audio support
+# Enforce flow
+# Troubleshoot group bug
+# Customize administrative control panel

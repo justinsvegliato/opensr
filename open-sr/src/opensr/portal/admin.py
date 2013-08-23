@@ -22,6 +22,11 @@ class BlockInline(admin.StackedInline):
     model = Block
     extra = 1
     
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == 'instructions':
+            kwargs['widget'] = TinyMCE(attrs={'cols': 100, 'rows': 15})
+        return super(BlockInline, self).formfield_for_dbfield(db_field, **kwargs)
+    
 class PageForm(FlatpageForm):
     class Meta:
         model = FlatPage

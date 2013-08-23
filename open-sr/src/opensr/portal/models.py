@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.flatpages.models import FlatPage
 from colorful.fields import RGBColorField
+from tinymce.widgets import TinyMCE
 
 class ParticipantManager(models.Manager):
     def create_participant(self, group, test):

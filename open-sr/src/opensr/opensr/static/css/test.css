@@ -17,8 +17,6 @@
 #start-hint {
     font-weight: bolder;
     font-size: 25px;
-    position: relative;
-    top: 320px;
 }
 #left-key-bind, #right-key-bind {
     font-weight: bolder;       
@@ -49,4 +47,7 @@
 .text-anchor {
     display: inline-block;
     margin-top: 25%
+}
+#instructions {
+    height: 360px;
 }
