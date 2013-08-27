@@ -6,6 +6,7 @@ $(document).ready(function() {
     };
 
     initializeInstructionPhase();
+    
     $(document).keypress(function(event) {
         if (phase !== Phase.TERMINATION) {
             var keyPressed = event.keyCode ? event.keyCode : event.which;
@@ -95,6 +96,7 @@ function initializeInstructionPhase() {
     $("#instructions").html(block.fields.instructions);
     $("#testing-phase-container").hide();
     $("#instruction-phase-container").show();
+    $("#status").css("visibility", "hidden");
 }
 
 function initializeTestingPhase() {
@@ -131,7 +133,6 @@ function handleCorrectAnswer() {
     }
     previousAnchor = anchor;
     anchorCount++;
-    correct = true;
     $("#status").css("visibility", "hidden");
 }
 

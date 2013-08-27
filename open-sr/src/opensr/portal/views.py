@@ -76,7 +76,8 @@ def group(request):
                 if groups[i].id == latest_group_id:
                    return groups[0] if (i == (len(groups) - 1)) else groups[i + 1]
         except ObjectDoesNotExist:
-            return groups[0]    
+            return groups[0]
+        
     group = get_next_group()
     
     participant = Participant.objects.create_participant(group, test)

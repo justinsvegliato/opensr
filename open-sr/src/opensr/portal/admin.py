@@ -1,6 +1,7 @@
 from django.contrib import admin
+from django import forms
 from django.contrib.flatpages.models import FlatPage
-from tinymce.widgets import TinyMCE
+from ckeditor.widgets import CKEditorWidget
 from portal.models import (
     Test, Block, ImageAnchor, TextAnchor, Group, Category
 )
@@ -22,20 +23,20 @@ class BlockInline(admin.StackedInline):
     model = Block
     extra = 1
     
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name == 'instructions':
-            kwargs['widget'] = TinyMCE(attrs={'cols': 100, 'rows': 15})
-        return super(BlockInline, self).formfield_for_dbfield(db_field, **kwargs)
-    
 class PageForm(FlatpageForm):
+    
     class Meta:
         model = FlatPage
         widgets = {
-            'content': TinyMCE(
-                attrs={
-                    'cols': 100, 
-                    'rows': 15
-            })
+            'content': CKEditorWidget()
+        }
+        
+class TestForm(forms.ModelForm):
+    
+    class Meta:
+        model = Test
+        widgets = {
+            'password': forms.PasswordInput(),
         }
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -44,7 +45,8 @@ class CategoryAdmin(admin.ModelAdmin):
         ImageAnchorInline, TextAnchorInline
     ]
     
-class TestAdmin(admin.ModelAdmin):    
+class TestAdmin(admin.ModelAdmin):  
+    form = TestForm
     list_display = ('name', 'is_active')
     inlines = [
         GroupInline, BlockInline

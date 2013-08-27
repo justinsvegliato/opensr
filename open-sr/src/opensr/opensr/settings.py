@@ -87,6 +87,17 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+CKEDITOR_UPLOAD_PATH = 'opensr/media/images'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'resize_minHeight': 300,
+        'width': 600,
+        'resize_enabled': False,
+    },
+}
+
 ROOT_URLCONF = 'opensr.urls'
 
 #WSGI_APPLICATION = 'opensr.wsgi.application'
@@ -107,8 +118,8 @@ INSTALLED_APPS = (
     'nested_inlines',
     'django.contrib.admin',
     'portal',
-    'tinymce',
     'colorful',
+    'ckeditor',
 )
 
 LOGGING = {
@@ -134,13 +145,3 @@ LOGGING = {
         },
     }
 }
-
-TINYMCE_JS_URL = '/static/tiny_mce/tiny_mce_src.js'
-TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,paste,searchreplace",
-    'theme': "advanced",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
-}
-TINYMCE_SPELLCHECKER = False
-TINYMCE_COMPRESSOR = False

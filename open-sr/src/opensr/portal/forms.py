@@ -7,9 +7,10 @@ from django.forms import (
 class IndexLoginForm(ModelForm):
     password = CharField(
         widget=PasswordInput(
-            attrs={
+            attrs = {
                 'placeholder': 'Password',
-                'id': 'password'
+                'id': 'password',
+                'class': 'form-control',
             }), 
         label=''
     )
@@ -17,7 +18,11 @@ class IndexLoginForm(ModelForm):
     test_choices = [("", "Select a test...")]
     test_choices.extend([(test.id, test.name) for test in Test.objects.all()]);
     test = ChoiceField(
-        widget = Select(attrs={'id': 'test'}),
+        widget = Select(
+            attrs = {
+            'id': 'test',
+            'class': 'form-control',
+        }),
         choices=test_choices,
         label=''
     )
@@ -38,7 +43,8 @@ class EntranceLoginForm(ModelForm):
         widget=PasswordInput(
             attrs={
                 'placeholder': 'Password',
-                'id': 'password'
+                'id': 'password',
+                'class': 'form-control',
             }), 
         label=''
     )

@@ -6,44 +6,57 @@
 {% endblock css %}
 
 {% block container %}
-<div class="row-fluid">
-    <div id="container" class="span8 offset2 well">
+<div class="row">
+    <div id="container" class="col-md-8 col-md-offset-2 well">
         <div id="instruction-phase-container">
             <h2>Instructions</h2>
             
             <div id="instructions" class="row-fluid"></div>
             
-            <div class="row-fluid text-center">
+            <div class="row text-center">
                 <span id="start-hint">Press space to continue</span>
             </div>
         </div>
         
         <div id="testing-phase-container">
-            <div id="category-container" class="row-fluid">
-                <div class="row-fluid">
-                    <h2 id="primary-left-category" class="span5 text-left"></h2>
-                    <h2 id="primary-right-category" class="offset2 span5 text-right"></h2>
+            <div id="category-container" class="row">
+                <div class="row">
+                    <div class="left-category-container col-md-5 pull-left">
+                        <span id="primary-left-category" class="category text-left"></span>
+                    </div>
+                    <div class="right-category-container col-md-5 pull-right text-right">
+                        <span id="primary-right-category" class="category text-right"></span>
+                    </div>
                 </div>
-                <div class="row-fluid">
-                    <span id="left-separator" class="span5 text-left">or</span>
-                    <span id="right-separator" class="offset2 span5 text-right">or</span>
+                <div class="row">
+                    <div class="left-category-container col-md-5 pull-left">
+                        <span id="left-separator" class="text-left">or</span>
+                    </div>
+                    <div class="right-category-container col-md-5 pull-right text-right">
+                        <span id="right-separator" class="text-right">or</span>
+                    </div>
                 </div>
-                <div class="row-fluid">
-                    <h2 id="secondary-left-category" class="span5 text-left"></h2>
-                    <h2 id="secondary-right-category" class="offset2 span5 text-right"></h2>
+                <div class="row">
+                    <div class="left-category-container col-md-5 pull-left">
+                        <span id="secondary-left-category" class="category text-left"></span>
+                    </div>
+                    <div class="right-category-container col-md-5 pull-right text-right">
+                        <span id="secondary-right-category" class="category text-right"></span>
+                    </div>
                 </div>
             </div>
 
-            <div class="row-fluid">
-                <div id="anchor" class="offset4 span4 text-center"></div>
+            <div class="row">
+                <div id="anchor" class="text-center"></div>
             </div>
 
-            <div class="row-fluid text-center">
-                <img id="status" src="/static/img/wrong.png" alt="Wrong Answer" />
+            <div class="row">
+                <div id="status" class="text-center">
+                    <img src="/static/img/wrong.png" alt="Wrong Answer" />
+                </div>
             </div>
             
-            <div class="alert" id="key-bind-reminder">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div class="alert alert-warning" id="key-bind-reminder">
                 Press the <span id="left-key-bind">{{ left_key_bind }}</span> and <span id="right-key-bind">{{ right_key_bind }}</span> keys to sort the item into the left and right categories respectively
             </div>
         </div>        
@@ -55,7 +68,7 @@
                 {% else %}
                 Click next to complete the survey 
                 {% endif %}
-                <br /><br />
+                <br />
                 <a href="{{ next_page_url }}" class="btn btn-primary" type="button">Next &rarr;</a>
             </span>
         </div>
