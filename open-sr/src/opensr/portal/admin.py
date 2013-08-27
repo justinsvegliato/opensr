@@ -49,8 +49,11 @@ class TestAdmin(admin.ModelAdmin):
     form = TestForm
     list_display = ('name', 'is_active')
     inlines = [
-        GroupInline, BlockInline
+        GroupInline
     ]    
+    
+class BlockAdmin(admin.ModelAdmin):
+    list_display = ('name', 'test')
 
 class PageAdmin(FlatPageAdmin):
     form = PageForm
@@ -59,3 +62,4 @@ admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, PageAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Test, TestAdmin)
+admin.site.register(Block, BlockAdmin)

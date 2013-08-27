@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'django.contrib.sites',
     'django.contrib.messages',
+    'bootstrap_admin',
     'nested_inlines',
     'django.contrib.admin',
     'portal',
