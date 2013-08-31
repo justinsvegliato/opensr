@@ -113,20 +113,22 @@ function initializeTestingPhase() {
 }
 
 function handleCorrectAnswer() {
-    function record(leftCategories, rightCategories, anchor, reactionTime, correct) {
+    function record(block, leftCategories, rightCategories, anchor, latency, correct) {
         data = {
+            "block": block.fields.name,
+            "practice": block.fields.practice,
             "primary_left_category": leftCategories[0].fields.name,
-            "secondary_left_category": leftCategories > 1 ? leftCategories[1].fields.name : null,
+            "secondary_left_category": leftCategories.length > 1 ? leftCategories[1].fields.name : null,
             "primary_right_category": rightCategories[0].fields.name,
-            "secondary_right_category": rightCategories > 1 ? rightCategories[1].fields.name : null,
+            "secondary_right_category": rightCategories.length > 1 ? rightCategories[1].fields.name : null,
             "anchor": anchor.fields.value,
-            "reaction_time": reactionTime,
+            "latency": latency,
             "correct": correct
         };
         $.get("../record/", data);
     }
 
-    record(leftCategories, rightCategories, anchor, new Date().getTime() - startTime, correct);
+    record(block, leftCategories, rightCategories, anchor, new Date().getTime() - startTime, correct);
     startTime = new Date().getTime();
     while (anchor === previousAnchor) {
          anchor = handleAnchor(leftCategories, rightCategories);

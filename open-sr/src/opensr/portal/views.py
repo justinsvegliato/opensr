@@ -5,6 +5,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.conf import settings
 from itertools import chain
+import json
 from django.shortcuts import (
     render, redirect
 )
@@ -136,19 +137,17 @@ def confirmation(request):
 
 def record(request):
     Trial.objects.create_result(
+        request.session['test'], 
+        request.session['participant'].group,
+        request.GET['block'], 
+        request.GET['practice'], 
         request.GET['primary_left_category'], 
         request.GET['secondary_left_category'], 
         request.GET['primary_right_category'],
-        request.GET['secondary_left_category'], 
+        request.GET['secondary_right_category'], 
         request.GET['anchor'], 
-        request.GET['reaction_time'], 
+        request.GET['latency'], 
         request.GET['correct'] == "true", 
         request.session['participant']
     )
     return HttpResponse('')
-
-# Fix data recording
-# Add audio support
-# Enforce flow
-# Troubleshoot group bug
-# Customize administrative control panel
