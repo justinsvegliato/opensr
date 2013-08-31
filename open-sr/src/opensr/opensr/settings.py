@@ -116,7 +116,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'bootstrap_admin',
-    'nested_inlines',
     'django.contrib.admin',
     'portal',
     'colorful',

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django import forms
 from django.contrib.flatpages.models import FlatPage
 from ckeditor.widgets import CKEditorWidget
-from portal.actions import export_as_csv
+from portal.admin_actions import export_as_csv
 from portal.models import (
     Test, Block, ImageAnchor, TextAnchor, Group, Trial, Category, Participant
 )
@@ -23,9 +23,10 @@ class GroupInline(admin.StackedInline):
 class TrialInline(admin.TabularInline):
     model = Trial
     extra = 1   
-    readonly_fields = ('date', 'time', 'test', 'participant', 'group', 'block', 'practice', 
+    readonly_fields = ('date', 'time', 'participant', 'block', 'practice', 
                   'primary_left_category', 'secondary_left_category', 'primary_right_category', 
                   'secondary_right_category', 'anchor', 'correct', 'latency')
+    exclude = ('test', 'group', )
     
     def has_add_permission(self, request, obj=None):
         return False
@@ -54,27 +55,35 @@ class TestForm(forms.ModelForm):
         }
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    ordering = ('category_name',)
+    list_display = ('category_name',)
     inlines = [
         ImageAnchorInline, TextAnchorInline
     ]
     
 class TestAdmin(admin.ModelAdmin):  
     form = TestForm
-    list_display = ('name', 'is_active')
+    ordering = ('test_name',)
+    list_display = ('test_name', 'is_active')
     inlines = [
         GroupInline
     ]    
     
 class BlockAdmin(admin.ModelAdmin):
-    list_display = ('name', 'test')
+    ordering = ('block_name',)
+    list_display = ('block_name', 'test')
 
 class PageAdmin(FlatPageAdmin):
     form = PageForm
 
 class ParticipantAdmin(admin.ModelAdmin):
     actions = [export_as_csv]
+    ordering = ('id',)
+    fields = ('test', 'group')
+    list_display = ('id', 'group', 'test')
+    search_fields = ('group__group_name', 'test__test_name')
     readonly_fields = ('group', 'test')
+    list_filter = ('group', 'test__test_name', 'test__is_active')
     inlines = [
         TrialInline
     ]    

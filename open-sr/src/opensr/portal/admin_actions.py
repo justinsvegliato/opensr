@@ -9,7 +9,7 @@ from portal.models import Trial
 export_info = [
     ("Date", "date"),
     ("Time", "time"),
-    ("Test", "test__name"),
+    ("Test", "test__test_name"),
     ("Group", "group"),
     ("Block", "block"),
     ("Practice", "practice"),
@@ -23,11 +23,7 @@ export_info = [
 ]
 
 class UnicodeWriter:
-    """
-    A CSV writer which will write rows to CSV file "f",
-    which is encoded in the given encoding.
-    """
-
+    
     def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
         self.queue = cStringIO.StringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
@@ -61,7 +57,7 @@ def export_as_csv(modeladmin, request, queryset):
         for row in rows:
             writer.writerow(row)
             
-        zipFile.writestr('participant%d.csv' % participant.id, f.getvalue())  
+        zipFile.writestr('%s-participant-%d.csv' % (participant.test.test_name.lower(), participant.id), f.getvalue())  
         
     for file in zipFile.filelist:  
         file.create_system = 0      

@@ -26,7 +26,7 @@ class TrialManager(models.Manager):
         )
     
 class Test(models.Model):
-    name = models.CharField(max_length=60, unique=True)
+    test_name = models.CharField(max_length=60, unique=True)
     introduction_page = models.ForeignKey(FlatPage, primary_key=False, related_name='test page', null=True, blank=True)
     informed_consent_page = models.ForeignKey(FlatPage, primary_key=False, related_name='agreement page')
     password = models.CharField(max_length=32)
@@ -37,15 +37,15 @@ class Test(models.Model):
     confirmation_page = models.ForeignKey(FlatPage, primary_key=False, related_name='confirmation page')
     
     def __unicode__(self):
-        return self.name
+        return self.test_name
     
 class Group(models.Model):
-    name = models.CharField(max_length=60, unique=True)
+    group_name = models.CharField(max_length=60, unique=True)
     page = models.ForeignKey(FlatPage, primary_key=False, related_name='group page', null=True, blank=True)
     test = models.ForeignKey(Test)
     
     def __unicode__(self):
-        return self.name
+        return self.group_name
     
 class Participant(models.Model):
     group = models.ForeignKey(Group, null=True)
@@ -56,17 +56,17 @@ class Participant(models.Model):
         return "Participant"
     
 class Category(models.Model):
-    name = models.CharField(max_length=20, unique=True) 
+    category_name = models.CharField(max_length=20, unique=True) 
     color = RGBColorField()
-    
-    def __unicode__(self):
-        return self.name
     
     class Meta:
         verbose_name_plural = "categories"
     
+    def __unicode__(self):
+        return self.category_name
+    
 class Block(models.Model):
-    name = models.CharField(max_length=60, unique=True)
+    block_name = models.CharField(max_length=60, unique=True)
     instructions = RichTextField()
     rank = models.IntegerField()   
     practice = models.BooleanField(default=False)
@@ -78,7 +78,7 @@ class Block(models.Model):
     secondary_left_category = models.ForeignKey(Category, related_name='secondary left category', null=True, blank=True)
     
     def __unicode__(self):
-        return self.name
+        return self.block_name
 
 class Anchor(models.Model):
     category = models.ForeignKey(Category)

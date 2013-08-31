@@ -140,14 +140,14 @@ def record(request):
         request.session['test'], 
         request.session['participant'].group,
         request.GET['block'], 
-        request.GET['practice'], 
+        request.GET['practice'] == 'true', 
         request.GET['primary_left_category'], 
         request.GET['secondary_left_category'], 
         request.GET['primary_right_category'],
         request.GET['secondary_right_category'], 
         request.GET['anchor'], 
         request.GET['latency'], 
-        request.GET['correct'] == "true", 
+        request.GET['correct'] == 'true', 
         request.session['participant']
     )
     return HttpResponse('')

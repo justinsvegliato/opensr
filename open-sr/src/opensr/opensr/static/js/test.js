@@ -115,12 +115,12 @@ function initializeTestingPhase() {
 function handleCorrectAnswer() {
     function record(block, leftCategories, rightCategories, anchor, latency, correct) {
         data = {
-            "block": block.fields.name,
+            "block": block.fields.block_name,
             "practice": block.fields.practice,
-            "primary_left_category": leftCategories[0].fields.name,
-            "secondary_left_category": leftCategories.length > 1 ? leftCategories[1].fields.name : null,
-            "primary_right_category": rightCategories[0].fields.name,
-            "secondary_right_category": rightCategories.length > 1 ? rightCategories[1].fields.name : null,
+            "primary_left_category": leftCategories[0].fields.category_name,
+            "secondary_left_category": leftCategories.length > 1 ? leftCategories[1].fields.category_name : null,
+            "primary_right_category": rightCategories[0].fields.category_name,
+            "secondary_right_category": rightCategories.length > 1 ? rightCategories[1].fields.category_name : null,
             "anchor": anchor.fields.value,
             "latency": latency,
             "correct": correct

@@ -16,7 +16,7 @@ class IndexLoginForm(ModelForm):
     )
     
     test_choices = [("", "Select a test...")]
-    test_choices.extend([(test.id, test.name) for test in Test.objects.all()]);
+    test_choices.extend([(test.id, test.test_name) for test in Test.objects.all()]);
     test = ChoiceField(
         widget = Select(
             attrs = {
