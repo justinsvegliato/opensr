@@ -6,72 +6,70 @@
 {% endblock css %}
 
 {% block container %}
-<div class="row">
-    <div id="container" class="col-md-8 col-md-offset-2 well">
-        <div id="instruction-phase-container">
-            <h2>Instructions</h2>
-            
-            <div id="instructions" class="row-fluid"></div>
-            
-            <div class="row text-center">
-                <span id="start-hint">Press space to continue</span>
+<div id="container" class="col-md-8 col-md-offset-2 well">
+    <div id="instruction-phase-container">
+        <h2>Instructions</h2>
+
+        <div id="instructions" class="row-fluid"></div>
+
+        <div class="row text-center">
+            <span id="start-hint">Press space to continue</span>
+        </div>
+    </div>
+
+    <div id="testing-phase-container">
+        <div id="category-container" class="row">
+            <div class="row">
+                <div class="left-category-container col-md-5 pull-left">
+                    <span id="primary-left-category" class="category text-left"></span>
+                </div>
+                <div class="right-category-container col-md-5 pull-right text-right">
+                    <span id="primary-right-category" class="category text-right"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="left-category-container col-md-5 pull-left">
+                    <span id="left-separator" class="text-left">or</span>
+                </div>
+                <div class="right-category-container col-md-5 pull-right text-right">
+                    <span id="right-separator" class="text-right">or</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="left-category-container col-md-5 pull-left">
+                    <span id="secondary-left-category" class="category text-left"></span>
+                </div>
+                <div class="right-category-container col-md-5 pull-right text-right">
+                    <span id="secondary-right-category" class="category text-right"></span>
+                </div>
             </div>
         </div>
-        
-        <div id="testing-phase-container">
-            <div id="category-container" class="row">
-                <div class="row">
-                    <div class="left-category-container col-md-5 pull-left">
-                        <span id="primary-left-category" class="category text-left"></span>
-                    </div>
-                    <div class="right-category-container col-md-5 pull-right text-right">
-                        <span id="primary-right-category" class="category text-right"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="left-category-container col-md-5 pull-left">
-                        <span id="left-separator" class="text-left">or</span>
-                    </div>
-                    <div class="right-category-container col-md-5 pull-right text-right">
-                        <span id="right-separator" class="text-right">or</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="left-category-container col-md-5 pull-left">
-                        <span id="secondary-left-category" class="category text-left"></span>
-                    </div>
-                    <div class="right-category-container col-md-5 pull-right text-right">
-                        <span id="secondary-right-category" class="category text-right"></span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div id="anchor" class="text-center"></div>
-            </div>
-
-            <div class="row">
-                <div id="status" class="text-center">
-                    <img src="/static/img/wrong.png" alt="Wrong Answer" />
-                </div>
-            </div>
-            
-            <div class="alert alert-warning" id="key-bind-reminder">
-                Press the <span id="left-key-bind">{{ left_key_bind }}</span> and <span id="right-key-bind">{{ right_key_bind }}</span> keys to sort the item into the left and right categories respectively
-            </div>
-        </div>        
-        
-        <div id="termination-phase-container" class="text-center">
-            <span id="thank-you-message">
-                {% if next_page_url == '/confirmation/' %}
-                Click next to finish the test
-                {% else %}
-                Click next to complete the survey 
-                {% endif %}
-                <br />
-                <a href="{{ next_page_url }}" class="btn btn-primary" type="button">Next &rarr;</a>
-            </span>
+        <div class="row">
+            <div id="anchor" class="text-center"></div>
         </div>
+
+        <div class="row">
+            <div id="status" class="text-center">
+                <img src="/static/img/wrong.png" alt="Wrong Answer" />
+            </div>
+        </div>
+
+        <div class="alert alert-warning" id="key-bind-reminder">
+            Press the <span id="left-key-bind">{{ left_key_bind }}</span> and <span id="right-key-bind">{{ right_key_bind }}</span> keys to sort the item into the left and right categories respectively
+        </div>
+    </div>        
+
+    <div id="termination-phase-container" class="text-center">
+        <span id="thank-you-message">
+            {% if next_page_url == '/confirmation/' %}
+            Click next to finish the test
+            {% else %}
+            Click next to complete the survey 
+            {% endif %}
+            <br />
+            <a href="{{ next_page_url }}" class="btn btn-primary" type="button">Next &rarr;</a>
+        </span>
     </div>
 </div>
 {% endblock container %}

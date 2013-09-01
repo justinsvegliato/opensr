@@ -1,8 +1,6 @@
 from django.core.exceptions import ValidationError
 from models import Test
-from django.forms import (
-    ModelForm, PasswordInput, CharField, ChoiceField, Select
-)
+from django.forms import (ModelForm, PasswordInput, CharField, ChoiceField, Select)
 
 class IndexLoginForm(ModelForm):
     password = CharField(

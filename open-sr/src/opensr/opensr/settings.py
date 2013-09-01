@@ -62,8 +62,8 @@ STATICFILES_FINDERS = (
 SECRET_KEY = 'vpko466n_yu^rv%4u(!o2(bo1b(dcn**s8=x4dt@puy$nbrsi2'
 
 TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.Loader',
     'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
     #'django.template.loaders.eggs.Loader',
 )
 
@@ -117,7 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'bootstrap_admin',
     'django.contrib.admin',
-    'portal',
+    'test',
     'colorful',
     'ckeditor',
 )

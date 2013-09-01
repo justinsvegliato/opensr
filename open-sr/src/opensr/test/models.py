@@ -50,6 +50,7 @@ class Group(models.Model):
 class Participant(models.Model):
     group = models.ForeignKey(Group, null=True)
     test = models.ForeignKey(Test)
+    has_completed_test = models.BooleanField(default=False)
     objects = ParticipantManager()
     
     def __unicode__(self):

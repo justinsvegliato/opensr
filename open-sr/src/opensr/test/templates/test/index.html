@@ -2,19 +2,17 @@
 {% load static %}
 
 {% block container %}
-<div class="row">
-    <div class="col-md-4 col-md-offset-4 well">
-        <h2>Test Selection</h2>
-        <form class="form-horizontal" role="form" method="post" action="{% url 'index' %}">
-            <div class="form-group">
-                <div class="col-md-12">
-                    {% csrf_token %}
-                    {{ login_form.as_p }}
-                </div>
+<div class="col-md-4 col-md-offset-4 well">
+    <h2>Test Selection</h2>
+    <form class="form-horizontal" role="form" method="post" action="{% url 'index' %}">
+        <div class="form-group">
+            <div class="col-md-12">
+                {% csrf_token %}
+                {{ login_form.as_p }}
             </div>
-            <button id="continue" name="continue" type="submit" class="btn btn-primary" disabled>Continue</button>     
-        </form>
-    </div>
+        </div>
+        <button id="continue" name="continue" type="submit" class="btn btn-primary" disabled>Continue</button>     
+    </form>
 </div>
 {% endblock container %}
 

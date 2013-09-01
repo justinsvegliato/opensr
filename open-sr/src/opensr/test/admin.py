@@ -2,13 +2,9 @@ from django.contrib import admin
 from django import forms
 from django.contrib.flatpages.models import FlatPage
 from ckeditor.widgets import CKEditorWidget
-from portal.admin_actions import export_as_csv
-from portal.models import (
-    Test, Block, ImageAnchor, TextAnchor, Group, Trial, Category, Participant
-)
-from django.contrib.flatpages.admin import (
-    FlatpageForm, FlatPageAdmin
-)
+from test.admin_actions import export_as_csv
+from test.models import (Test, Block, ImageAnchor, TextAnchor, Group, Trial, Category, Participant)
+from django.contrib.flatpages.admin import (FlatpageForm, FlatPageAdmin)
 
 class ImageAnchorInline(admin.TabularInline):
     model = ImageAnchor 
@@ -80,10 +76,10 @@ class ParticipantAdmin(admin.ModelAdmin):
     actions = [export_as_csv]
     ordering = ('id',)
     fields = ('test', 'group')
-    list_display = ('id', 'group', 'test')
+    list_display = ('id', 'group', 'test', 'has_completed_test')
     search_fields = ('group__group_name', 'test__test_name')
     readonly_fields = ('group', 'test')
-    list_filter = ('group', 'test__test_name', 'test__is_active')
+    list_filter = ('group', 'test__test_name', 'test__is_active', 'has_completed_test')
     inlines = [
         TrialInline
     ]    

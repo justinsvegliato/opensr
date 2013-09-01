@@ -87,6 +87,8 @@ function initializeTerminationPhase() {
     phase = Phase.TERMINATION;
     $("#testing-phase-container").hide();
     $("#termination-phase-container").show();
+    data = {'test_status': true};
+    $.get("../record/test-status/", data);
 }
 
 function initializeInstructionPhase() {
@@ -113,7 +115,7 @@ function initializeTestingPhase() {
 }
 
 function handleCorrectAnswer() {
-    function record(block, leftCategories, rightCategories, anchor, latency, correct) {
+    function record_trial(block, leftCategories, rightCategories, anchor, latency, correct) {
         data = {
             "block": block.fields.block_name,
             "practice": block.fields.practice,
@@ -125,10 +127,10 @@ function handleCorrectAnswer() {
             "latency": latency,
             "correct": correct
         };
-        $.get("../record/", data);
+        $.get("../record/trial/", data);
     }
 
-    record(block, leftCategories, rightCategories, anchor, new Date().getTime() - startTime, correct);
+    record_trial(block, leftCategories, rightCategories, anchor, new Date().getTime() - startTime, correct);
     startTime = new Date().getTime();
     while (anchor === previousAnchor) {
          anchor = handleAnchor(leftCategories, rightCategories);

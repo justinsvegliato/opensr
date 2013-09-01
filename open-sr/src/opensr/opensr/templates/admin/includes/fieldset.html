@@ -47,7 +47,7 @@
                                 </div>
                                 {% else %}
                                 <div class="control-label">{{ field.label_tag }}</div>
-                                <div class="controls">
+                                <div class="controls{% if field.is_readonly %} uneditable-input{% endif %}">
                                     {% if field.is_readonly %}
                                         <p>{{ field.contents|linebreaksbr }}</p>
                                     {% else %}

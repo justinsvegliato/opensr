@@ -4,7 +4,7 @@ import cStringIO
 from StringIO import StringIO  
 from zipfile import ZipFile  
 from django.http import HttpResponse
-from portal.models import Trial
+from test.models import Trial
 
 export_info = [
     ("Date", "date"),
