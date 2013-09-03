@@ -1,7 +1,7 @@
 #container {
     min-height: 515px;
 }
-#anchor {
+#stimulus {
     margin-top: 50px;
     font-size: 25px;
     height: 150px;
@@ -50,10 +50,10 @@
     font-weight: bolder;
     font-size: 30px;
 }
-.image-anchor {
+.image-stimulus {
     height: 135px;
 }
-.text-anchor {
+.text-stimulus {
     margin-top: 50px;
     display: inline-block;
 }

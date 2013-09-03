@@ -4,22 +4,22 @@ from colorful.fields import RGBColorField
 from ckeditor.fields import RichTextField
 
 class ParticipantManager(models.Manager):
-    def create_participant(self, group, test):
-        return self.create(group=group, test=test)
+    def create_participant(self, experimental_group, test):
+        return self.create(experimental_group=experimental_group, test=test)
     
 class TrialManager(models.Manager):
-    def create_result(self, test, group, block, practice, primary_left_category, secondary_left_category, 
-        primary_right_category, secondary_right_category, anchor, latency, correct, participant):
+    def create_result(self, test, experimental_group, block, practice, primary_left_category, secondary_left_category, 
+        primary_right_category, secondary_right_category, stimulus, latency, correct, participant):
         return self.create(
             test=test,
-            group=group,
+            experimental_group=experimental_group,
             block=block,
             practice=practice,
             primary_left_category=primary_left_category, 
             secondary_left_category=secondary_left_category,
             primary_right_category=primary_right_category,
             secondary_right_category=secondary_right_category,
-            anchor=anchor, 
+            stimulus=stimulus, 
             latency=latency, 
             correct=correct, 
             participant=participant
@@ -39,16 +39,16 @@ class Test(models.Model):
     def __unicode__(self):
         return self.test_name
     
-class Group(models.Model):
+class ExperimentalGroup(models.Model):
     group_name = models.CharField(max_length=60, unique=True)
-    page = models.ForeignKey(FlatPage, primary_key=False, related_name='group page', null=True, blank=True)
+    page = models.ForeignKey(FlatPage, primary_key=False, related_name='experimental group page', null=True, blank=True)
     test = models.ForeignKey(Test)
     
     def __unicode__(self):
         return self.group_name
     
 class Participant(models.Model):
-    group = models.ForeignKey(Group, null=True)
+    experimental_group = models.ForeignKey(ExperimentalGroup, null=True)
     test = models.ForeignKey(Test)
     has_completed_test = models.BooleanField(default=False)
     objects = ParticipantManager()
@@ -69,9 +69,9 @@ class Category(models.Model):
 class Block(models.Model):
     block_name = models.CharField(max_length=60, unique=True)
     instructions = RichTextField()
-    rank = models.IntegerField()   
+    order = models.IntegerField()   
     practice = models.BooleanField(default=False)
-    length = models.IntegerField()
+    number_of_stimuli = models.IntegerField()
     test = models.ForeignKey(Test)
     primary_right_category = models.ForeignKey(Category, related_name='primary right category')
     secondary_right_category = models.ForeignKey(Category, related_name='secondary right category', null=True, blank=True)
@@ -81,19 +81,19 @@ class Block(models.Model):
     def __unicode__(self):
         return self.block_name
 
-class Anchor(models.Model):
+class Stimulus(models.Model):
     category = models.ForeignKey(Category)
     
     class Meta:
         abstract = True
     
-class ImageAnchor(Anchor):
+class ImageStimulus(Stimulus):
     value = models.ImageField(upload_to="images/")
     
     def __unicode__(self):
         return self.value
     
-class TextAnchor(Anchor):  
+class TextStimulus(Stimulus):  
     value = models.CharField(max_length=60) 
     
     def __unicode__(self):
@@ -104,14 +104,14 @@ class Trial(models.Model):
     time = models.TimeField(auto_now=True)
     test = models.ForeignKey(Test)
     participant = models.ForeignKey(Participant)
-    group = models.CharField(max_length=60)
+    experimental_group = models.CharField(max_length=60)
     block = models.CharField(max_length=60)
     practice = models.BooleanField()
     primary_left_category = models.CharField(max_length=60)
     secondary_left_category = models.CharField(max_length=60)
     primary_right_category = models.CharField(max_length=60)
     secondary_right_category = models.CharField(max_length=60)
-    anchor = models.CharField(max_length=120)
+    stimulus = models.CharField(max_length=120)
     latency = models.DecimalField(max_digits=20, decimal_places=2)
     correct = models.BooleanField()
     objects = TrialManager()

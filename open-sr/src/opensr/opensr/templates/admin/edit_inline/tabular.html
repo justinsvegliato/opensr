@@ -58,8 +58,27 @@
                     {% endif %}
                 </tr>
                 {% endfor %}
-                </tbody>
+                </tbody>                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td colspan="0">
+                            <span class="move-add-row-after-me"></span>
+                        </td>
+                    </tr>
+                </tfoot>
+                
             </table>
         </fieldset>
     </div>
 </div>
+
+<script type="text/javascript">
+(function($) {
+    $("#{{ inline_admin_formset.formset.prefix }}-group .tabular.inline-related tfoot .move-add-row-after-me").tabularFormset({
+          prefix: "{{ inline_admin_formset.formset.prefix }}",
+          adminStaticPrefix: '{% static "admin/" %}',
+          addText: '{% blocktrans with inline_admin_formset.opts.verbose_name|title as verbose_name %}<i class="icon-plus-sign"></i> Add another {{ verbose_name }}{% endblocktrans %}',
+          deleteText: '<i class="icon-minus-sign"></i>{% trans 'Remove' %}'
+    });
+})(django.jQuery);
+</script>

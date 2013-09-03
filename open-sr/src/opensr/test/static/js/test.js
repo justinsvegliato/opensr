@@ -22,11 +22,11 @@ $(document).ready(function() {
             if (keyPressed === START_KEY_BIND && phase === Phase.INSTRUCTION) {
                 initializeTestingPhase();
             } else if ($.inArray(keyPressed, LEFT_KEY_BINDS.concat(RIGHT_KEY_BINDS)) >= 0 && phase === Phase.TESTING) {
-                var correctRightCategory = $.inArray(keyPressed, RIGHT_KEY_BINDS) >= 0 && $.inArray(anchor.fields.category, getIds(rightCategories)) >= 0;
-                var correctLeftCategory = $.inArray(keyPressed, LEFT_KEY_BINDS) >= 0 && $.inArray(anchor.fields.category, getIds(leftCategories)) >= 0;
+                var correctRightCategory = $.inArray(keyPressed, RIGHT_KEY_BINDS) >= 0 && $.inArray(stimulus.fields.category, getIds(rightCategories)) >= 0;
+                var correctLeftCategory = $.inArray(keyPressed, LEFT_KEY_BINDS) >= 0 && $.inArray(stimulus.fields.category, getIds(leftCategories)) >= 0;
                 if (correctRightCategory || correctLeftCategory) {
                     handleCorrectAnswer();
-                    if (anchorCount > block.fields.length) {
+                    if (stimulusCount > block.fields.number_of_stimuli) {
                         if (blocks.length > 0) {
                             initializeInstructionPhase();
                         } else {
@@ -42,9 +42,9 @@ $(document).ready(function() {
 });
 
 function handleBlock() {
-    for (var rank = 1; rank < 10; rank++) {
+    for (var order = 1; order < 10; order++) {
         var blockGroup = $.grep(blocks, function(n) {
-            return n.fields.rank === rank;
+            return n.fields.order === order;
         });
         if (blockGroup !== null && blockGroup.length !== 0) {
             var block = blockGroup[Math.floor(Math.random() * blockGroup.length)];
@@ -56,26 +56,26 @@ function handleBlock() {
     }
 }
 
-function handleAnchor(leftCategories, rightCategories) {
+function handleStimulus(leftCategories, rightCategories) {
     var categoryIds = getIds(leftCategories).concat(getIds(rightCategories));
-    var filteredAnchors = $.grep(anchors, function(n) {
+    var filteredStimuli = $.grep(stimuli, function(n) {
         return $.inArray(n.fields.category, categoryIds) >= 0;
     });
-    var anchor = filteredAnchors[Math.floor(Math.random() * filteredAnchors.length)];
-    var html = (anchor.model === "portal.imageanchor") 
-          ? '<img class="image-anchor" src="' + media_url + anchor.fields.value + '" alt="picture" />'
-          : '<span class="text-anchor">' + anchor.fields.value + "</span>";
-    $("#anchor").html(html);
-    return anchor;
+    var stimulus = filteredStimuli[Math.floor(Math.random() * filteredStimuli.length)];
+    var html = (stimulus.model === "portal.imagestimulus") 
+          ? '<img class="image-stimulus" src="' + media_url + stimulus.fields.value + '" alt="picture" />'
+          : '<span class="text-stimulus">' + stimulus.fields.value + "</span>";
+    $("#stimulus").html(html);
+    return stimulus;
 }
 
 function handleCategory(block, categoryType) {
     var filteredCategories = $.grep(categories, function(n) {
         return n.pk === block.fields["primary_" + categoryType + "_category"] || n.pk === block.fields["secondary_" + categoryType + "_category"];
     });
-    $("#primary-" + categoryType + "-category").html(filteredCategories[0].fields.name).css("color", filteredCategories[0].fields.color);
+    $("#primary-" + categoryType + "-category").html(filteredCategories[0].fields.category_name).css("color", filteredCategories[0].fields.color);
     if (filteredCategories.length > 1) {
-        $("#secondary-" + categoryType + "-category").html(filteredCategories[1].fields.name).css("color", filteredCategories[1].fields.color);
+        $("#secondary-" + categoryType + "-category").html(filteredCategories[1].fields.category_name).css("color", filteredCategories[1].fields.color);
         $("#" + categoryType + "-separator").show();
     } else {
         $("#" + categoryType + "-separator").hide();
@@ -94,7 +94,7 @@ function initializeTerminationPhase() {
 function initializeInstructionPhase() {
     phase = Phase.INSTRUCTION;
     block = handleBlock();
-    anchorCount = 0;
+    stimulusCount = 0;
     $("#instructions").html(block.fields.instructions);
     $("#testing-phase-container").hide();
     $("#instruction-phase-container").show();
@@ -105,9 +105,9 @@ function initializeTestingPhase() {
     phase = Phase.TESTING;
     leftCategories = handleCategory(block, "left");
     rightCategories = handleCategory(block, "right");
-    anchor = handleAnchor(leftCategories, rightCategories);
-    previousAnchor = anchor;
-    anchorCount = 1;
+    stimulus = handleStimulus(leftCategories, rightCategories);
+    previousStimulus = stimulus;
+    stimulusCount = 1;
     startTime = new Date().getTime();
     correct = true;
     $("#instruction-phase-container").hide();
@@ -115,7 +115,7 @@ function initializeTestingPhase() {
 }
 
 function handleCorrectAnswer() {
-    function record_trial(block, leftCategories, rightCategories, anchor, latency, correct) {
+    function record_trial(block, leftCategories, rightCategories, stimulus, latency, correct) {
         data = {
             "block": block.fields.block_name,
             "practice": block.fields.practice,
@@ -123,20 +123,20 @@ function handleCorrectAnswer() {
             "secondary_left_category": leftCategories.length > 1 ? leftCategories[1].fields.category_name : null,
             "primary_right_category": rightCategories[0].fields.category_name,
             "secondary_right_category": rightCategories.length > 1 ? rightCategories[1].fields.category_name : null,
-            "anchor": anchor.fields.value,
+            "stimulus": stimulus.fields.value,
             "latency": latency,
             "correct": correct
         };
         $.get("../record/trial/", data);
     }
 
-    record_trial(block, leftCategories, rightCategories, anchor, new Date().getTime() - startTime, correct);
+    record_trial(block, leftCategories, rightCategories, stimulus, new Date().getTime() - startTime, correct);
     startTime = new Date().getTime();
-    while (anchor === previousAnchor) {
-         anchor = handleAnchor(leftCategories, rightCategories);
+    while (stimulus === previousStimulus) {
+         stimulus = handleStimulus(leftCategories, rightCategories);
     }
-    previousAnchor = anchor;
-    anchorCount++;
+    previousStimulus = stimulus;
+    stimulusCount++;
     $("#status").css("visibility", "hidden");
 }
 

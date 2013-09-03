@@ -3,17 +3,17 @@ from django import forms
 from django.contrib.flatpages.models import FlatPage
 from ckeditor.widgets import CKEditorWidget
 from test.admin_actions import export_as_csv
-from test.models import (Test, Block, ImageAnchor, TextAnchor, Group, Trial, Category, Participant)
+from test.models import (Test, Block, ImageStimulus, TextStimulus, ExperimentalGroup, Trial, Category, Participant)
 from django.contrib.flatpages.admin import (FlatpageForm, FlatPageAdmin)
 
-class ImageAnchorInline(admin.TabularInline):
-    model = ImageAnchor 
+class ImageStimulusInline(admin.TabularInline):
+    model = ImageStimulus
     
-class TextAnchorInline(admin.TabularInline):
-    model = TextAnchor 
+class TextStimulusInline(admin.TabularInline):
+    model = TextStimulus 
             
-class GroupInline(admin.StackedInline):
-    model = Group
+class ExperimentalGroupInline(admin.StackedInline):
+    model = ExperimentalGroup
     extra = 1
     
 class TrialInline(admin.TabularInline):
@@ -21,8 +21,8 @@ class TrialInline(admin.TabularInline):
     extra = 1   
     readonly_fields = ('date', 'time', 'participant', 'block', 'practice', 
                   'primary_left_category', 'secondary_left_category', 'primary_right_category', 
-                  'secondary_right_category', 'anchor', 'correct', 'latency')
-    exclude = ('test', 'group', )
+                  'secondary_right_category', 'stimulus', 'correct', 'latency')
+    exclude = ('test', 'experimental_group', )
     
     def has_add_permission(self, request, obj=None):
         return False
@@ -54,7 +54,7 @@ class CategoryAdmin(admin.ModelAdmin):
     ordering = ('category_name',)
     list_display = ('category_name',)
     inlines = [
-        ImageAnchorInline, TextAnchorInline
+        ImageStimulusInline, TextStimulusInline
     ]
     
 class TestAdmin(admin.ModelAdmin):  
@@ -62,7 +62,7 @@ class TestAdmin(admin.ModelAdmin):
     ordering = ('test_name',)
     list_display = ('test_name', 'is_active')
     inlines = [
-        GroupInline
+        ExperimentalGroupInline
     ]    
     
 class BlockAdmin(admin.ModelAdmin):
@@ -75,11 +75,11 @@ class PageAdmin(FlatPageAdmin):
 class ParticipantAdmin(admin.ModelAdmin):
     actions = [export_as_csv]
     ordering = ('id',)
-    fields = ('test', 'group')
-    list_display = ('id', 'group', 'test', 'has_completed_test')
-    search_fields = ('group__group_name', 'test__test_name')
-    readonly_fields = ('group', 'test')
-    list_filter = ('group', 'test__test_name', 'test__is_active', 'has_completed_test')
+    fields = ('test', 'experimental_group')
+    list_display = ('id', 'experimental_group', 'test', 'has_completed_test')
+    search_fields = ('experimental_group__group_name', 'test__test_name')
+    readonly_fields = ('experimental_group', 'test')
+    list_filter = ('experimental_group', 'test__test_name', 'test__is_active', 'has_completed_test')
     inlines = [
         TrialInline
     ]    

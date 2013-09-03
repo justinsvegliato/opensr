@@ -9,15 +9,14 @@ from test.models import Trial
 export_info = [
     ("Date", "date"),
     ("Time", "time"),
-    ("Test", "test__test_name"),
-    ("Group", "group"),
+    ("Experimental Group", "experimental_group"),
     ("Block", "block"),
     ("Practice", "practice"),
     ("Primary Left Category", "primary_left_category"),
     ("Secondary Left Category", "secondary_left_category"),
     ("Primary Right Category", "primary_right_category"),
     ("Secondary Right Category", "secondary_right_category"),
-    ("Anchor", "anchor"),
+    ("Stimulus", "stimulus"),
     ("Latency", "latency"),
     ("Correct", "correct"),
 ]
