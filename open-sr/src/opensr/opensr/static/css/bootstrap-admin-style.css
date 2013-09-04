@@ -1,0 +1,4 @@
+.required:after {
+    content: " *";
+    color: #c31c1c;
+}
