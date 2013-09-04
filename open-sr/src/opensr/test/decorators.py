@@ -9,6 +9,12 @@ def has_participant_id(f, request):
     return f(request)
 
 @decorator
+def has_no_participant_id(f, request, *id):
+    if 'participant' in request.session:
+        return redirect(reverse('error'))
+    return f(request)
+
+@decorator
 def has_completed_test(f, request):
     if not request.session['participant'].has_completed_test:
         return redirect(reverse('error'))
@@ -17,5 +23,11 @@ def has_completed_test(f, request):
 @decorator
 def has_not_completed_test(f, request):
     if request.session['participant'].has_completed_test:
+        return redirect(reverse('error'))
+    return f(request)
+
+@decorator
+def has_test_id(f, request):
+    if not 'test' in request.session:
         return redirect(reverse('error'))
     return f(request)

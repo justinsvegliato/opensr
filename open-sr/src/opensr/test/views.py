@@ -8,8 +8,9 @@ from itertools import chain
 from django.shortcuts import (render, redirect)
 from test.models import (Test, ExperimentalGroup, Participant, Block, Category, ImageStimulus, TextStimulus, Trial)
 from test.forms import (IndexLoginForm, EntranceLoginForm)
-from test.decorators import (has_participant_id, has_completed_test, has_not_completed_test)
+from test.decorators import (has_participant_id, has_completed_test, has_not_completed_test, has_no_participant_id, has_test_id)
 
+@has_no_participant_id
 def index(request):
     login_form = IndexLoginForm()    
     if request.POST:
@@ -21,6 +22,7 @@ def index(request):
     object_context = {'login_form': login_form}
     return render(request, 'test/index.html', object_context)
 
+@has_no_participant_id
 def entrance(request, test_id):
     login_form = EntranceLoginForm()    
     if request.POST:
@@ -35,6 +37,7 @@ def entrance(request, test_id):
     }
     return render(request, 'test/entrance.html', object_context)   
 
+@has_test_id
 def informed_consent(request):
     object_context = {
         'flatpage': request.session['test'].informed_consent_page,
@@ -44,6 +47,7 @@ def informed_consent(request):
     context_instance.autoescape=False    
     return render(request, 'flatpages/default.html', object_context, context_instance=context_instance)
 
+@has_test_id
 def introduction(request):
     page = request.session['test'].introduction_page
     if page:
@@ -57,6 +61,7 @@ def introduction(request):
     else:
         return redirect(reverse('experimental-group'))
 
+@has_test_id
 def experimental_group(request):
     test = request.session['test']
     groups = ExperimentalGroup.objects.filter(test=test).order_by('id')
