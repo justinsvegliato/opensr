@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from models import Test
 from django.forms import (ModelForm, PasswordInput, CharField, ChoiceField, Select)
+from django.forms.models import BaseInlineFormSet    
 
 class IndexLoginForm(ModelForm):
     password = CharField(
@@ -60,3 +61,13 @@ class EntranceLoginForm(ModelForm):
         if not Test.objects.filter(id=self.test_id, password=password).count():
             raise ValidationError("Invalid password")
         return password
+
+class AtLeastOneFormSet(BaseInlineFormSet):
+    def clean(self):
+        super(AtLeastOneFormSet, self).clean()
+        non_empty_forms = 0
+        for form in self:
+            if form.cleaned_data:
+                non_empty_forms += 1
+        if non_empty_forms - len(self.deleted_forms) < 1:
+            raise ValidationError("Please create at least one object")

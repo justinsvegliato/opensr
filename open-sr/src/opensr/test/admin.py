@@ -5,6 +5,7 @@ from ckeditor.widgets import CKEditorWidget
 from test.admin_actions import export_as_csv
 from test.models import (Test, Block, ImageStimulus, TextStimulus, ExperimentalGroup, Trial, Category, Participant)
 from django.contrib.flatpages.admin import (FlatpageForm, FlatPageAdmin)
+from test.forms import AtLeastOneFormSet
 
 class ImageStimulusInline(admin.TabularInline):
     model = ImageStimulus
@@ -15,6 +16,7 @@ class TextStimulusInline(admin.TabularInline):
 class ExperimentalGroupInline(admin.StackedInline):
     model = ExperimentalGroup
     extra = 1
+    formset = AtLeastOneFormSet
     
 class TrialInline(admin.TabularInline):
     model = Trial

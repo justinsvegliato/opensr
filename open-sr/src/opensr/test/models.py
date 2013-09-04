@@ -42,7 +42,7 @@ class Test(models.Model):
 class ExperimentalGroup(models.Model):
     group_name = models.CharField(max_length=60, unique=True)
     page = models.ForeignKey(FlatPage, primary_key=False, related_name='experimental group page', null=True, blank=True)
-    test = models.ForeignKey(Test)
+    test = models.ForeignKey(Test, blank=False, null=False)
     
     def __unicode__(self):
         return self.group_name

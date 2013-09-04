@@ -60,10 +60,6 @@ def introduction(request):
 def experimental_group(request):
     test = request.session['test']
     groups = ExperimentalGroup.objects.filter(test=test).order_by('id')
-
-    # TODO Possible bug? Reverse back to error page stating no groups have been created?
-    if not len(groups):
-        return redirect(reverse('test'))
     
     if not 'participant' in request.session:
         def get_next_group():
