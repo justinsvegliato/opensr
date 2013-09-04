@@ -1,5 +1,5 @@
-from django.core.exceptions import ValidationError
-from models import Test
+from django.core.exceptions import (ValidationError, ObjectDoesNotExist)
+from models import (Test, Block)
 from django.forms import (ModelForm, PasswordInput, CharField, ChoiceField, Select)
 from django.forms.models import BaseInlineFormSet    
 from ckeditor.widgets import CKEditorWidget
@@ -17,8 +17,15 @@ class IndexLoginForm(ModelForm):
         label=''
     )
     
+    active_tests = Test.objects.filter(is_active=True)
+    valid_tests = []
+    for test in active_tests:
+        blocks = Block.objects.filter(test=test)
+        if blocks.count() > 0:
+            valid_tests.append(test)
+    
     test_choices = [("", "Select a test...")]
-    test_choices.extend([(test.id, test.test_name) for test in Test.objects.all()]);
+    test_choices.extend([(test.id, test.test_name) for test in valid_tests]);
     test = ChoiceField(
         widget = Select(
             attrs = {
@@ -61,8 +68,17 @@ class EntranceLoginForm(ModelForm):
         
     def clean_password(self):
         password = self.cleaned_data['password']
-        if not Test.objects.filter(id=self.test_id, password=password).count():
-            raise ValidationError("Invalid password")
+        try:
+            test = Test.objects.get(id=self.test_id, password=password)
+        except ObjectDoesNotExist:
+            raise ValidationError("Invalid test or password")
+        else:
+            if not test.is_active:
+                raise ValidationError("This test is not active")
+        
+            if Block.objects.filter(test=test).count() <= 0:
+                raise ValidationError("This test has not been configured properly")
+        
         return password
 
 class AtLeastOneFormSet(BaseInlineFormSet):
