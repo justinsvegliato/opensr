@@ -2,6 +2,9 @@ from django.core.exceptions import ValidationError
 from models import Test
 from django.forms import (ModelForm, PasswordInput, CharField, ChoiceField, Select)
 from django.forms.models import BaseInlineFormSet    
+from ckeditor.widgets import CKEditorWidget
+from django.contrib.flatpages.models import FlatPage
+from django.contrib.flatpages.admin import FlatpageForm
 
 class IndexLoginForm(ModelForm):
     password = CharField(
@@ -71,3 +74,11 @@ class AtLeastOneFormSet(BaseInlineFormSet):
                 non_empty_forms += 1
         if non_empty_forms - len(self.deleted_forms) < 1:
             raise ValidationError("Please create at least one object")
+        
+class PageForm(FlatpageForm):
+    
+    class Meta:
+        model = FlatPage
+        widgets = {
+            'content': CKEditorWidget()
+        }

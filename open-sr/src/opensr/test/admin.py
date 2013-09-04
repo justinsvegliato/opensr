@@ -1,11 +1,10 @@
 from django.contrib import admin
 from django import forms
 from django.contrib.flatpages.models import FlatPage
-from ckeditor.widgets import CKEditorWidget
 from test.admin_actions import export_as_csv
 from test.models import (Test, Block, ImageStimulus, TextStimulus, ExperimentalGroup, Trial, Category, Participant)
-from django.contrib.flatpages.admin import (FlatpageForm, FlatPageAdmin)
-from test.forms import AtLeastOneFormSet
+from test.forms import (AtLeastOneFormSet, PageForm)
+from django.contrib.flatpages.admin import FlatPageAdmin
 
 class ImageStimulusInline(admin.TabularInline):
     model = ImageStimulus
@@ -35,14 +34,6 @@ class TrialInline(admin.TabularInline):
 class BlockInline(admin.StackedInline):
     model = Block
     extra = 1
-    
-class PageForm(FlatpageForm):
-    
-    class Meta:
-        model = FlatPage
-        widgets = {
-            'content': CKEditorWidget()
-        }
         
 class TestForm(forms.ModelForm):
     
