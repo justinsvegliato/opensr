@@ -8,9 +8,10 @@ from itertools import chain
 from django.shortcuts import (render, redirect)
 from test.models import (Test, ExperimentalGroup, Participant, Block, Category, ImageStimulus, TextStimulus, Trial)
 from test.forms import (IndexLoginForm, EntranceLoginForm)
-from test.decorators import (has_participant_id, has_completed_test, has_not_completed_test, has_no_participant_id, has_test_id)
+from test.decorators import (has_participant_id, has_completed_test, has_not_completed_test, has_no_participant_id, has_test_id, has_no_test_id)
 
 @has_no_participant_id
+@has_no_test_id
 def index(request):
     login_form = IndexLoginForm()    
     if request.POST:
@@ -23,6 +24,7 @@ def index(request):
     return render(request, 'test/index.html', object_context)
 
 @has_no_participant_id
+@has_no_test_id
 def entrance(request, test_id):
     login_form = EntranceLoginForm()    
     if request.POST:
@@ -32,8 +34,8 @@ def entrance(request, test_id):
             return redirect(reverse('informed_consent'))
         
     object_context = {
-    'login_form': login_form,
-    'test_id': test_id
+        'login_form': login_form,
+        'test_id': test_id
     }
     return render(request, 'test/entrance.html', object_context)   
 
@@ -173,6 +175,20 @@ def record_test_status(request):
     request.session['participant'].has_completed_test = (request.GET['test_status'] == 'true')
     request.session['participant'].save()
     return HttpResponse('OK')
+
+@has_test_id
+def exit(request):
+    if 'participant' in request.session:
+        del request.session['participant']
+        
+    if 'test' in request.session:
+        del request.session['test']
+        
+    object_context = {
+        'login_form': IndexLoginForm(),
+        'alert': 'You have successfully exited the test'
+    }
+    return render(request, 'test/index.html', object_context)
 
 def error(request):
     return render(request, 'test/error.html', {})

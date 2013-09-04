@@ -6,9 +6,6 @@ PROJECT_ROOT = os.path.dirname(__file__)
 def get_absolute_url(directory):
     return os.path.join(PROJECT_ROOT, directory)
 
-SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -20,9 +17,9 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': get_absolute_url('opensr.db'),
-        'USER': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'opensr',
+        'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',

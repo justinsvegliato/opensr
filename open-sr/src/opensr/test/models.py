@@ -40,9 +40,9 @@ class Test(models.Model):
         return self.test_name
     
 class ExperimentalGroup(models.Model):
-    group_name = models.CharField(max_length=60, unique=True)
+    group_name = models.CharField(max_length=60)
     page = models.ForeignKey(FlatPage, primary_key=False, related_name='experimental group page', null=True, blank=True)
-    test = models.ForeignKey(Test, blank=False, null=False)
+    test = models.ForeignKey(Test)
     
     def __unicode__(self):
         return self.group_name
