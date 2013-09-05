@@ -23,7 +23,12 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-    }
+        'OPTIONS': { 
+            "init_command": "SET storage_engine=INNODB; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED;", 
+        },
+    },
+    
+#    SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED
 }
 
 TIME_ZONE = 'America/New_York'
