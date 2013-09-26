@@ -1,0 +1,63 @@
+#container {
+    min-height: 515px;
+}
+#stimulus {
+    margin-top: 50px;
+    font-size: 25px;
+    height: 150px;
+    margin-bottom: 15px;
+}
+#category-container {
+    height: 125px;
+}
+#status {
+    height: 60px;
+}
+#start-hint {
+    font-weight: bolder;
+    font-size: 25px;
+}
+#left-key-bind, #right-key-bind {
+    font-weight: bolder;       
+}
+#termination-phase-container {
+    display: none;
+    height: 445px;
+}
+#thank-you-message {
+    font-weight: bolder;
+    position: relative;
+    top: 40%;
+    font-size: 25px;
+}
+#testing-phase-container {
+    display: none;
+}
+#left-separator, #right-separator {
+    font-weight: bolder;
+    font-size: 24px;
+}
+#instructions {
+    height: 360px;
+}
+.left-category-container {
+    padding-left: 5%;
+}
+.right-category-container {
+    padding-right: 5%;
+}
+.category {    
+    font-weight: bolder;
+    font-size: 30px;
+}
+.image-stimulus {
+    height: 135px;
+}
+.text-stimulus {
+    margin-top: 50px;
+    display: inline-block;
+}
+#key-bind-reminder {
+    margin-top: 22px;
+    margin-bottom: 0px;
+}

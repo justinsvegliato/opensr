@@ -1,0 +1,4 @@
+/open-sr/nbproject/private/
+venv
+*.pyc
+staticfiles
