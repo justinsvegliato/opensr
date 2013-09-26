@@ -43,7 +43,7 @@ USE_L10N = True
  
 USE_TZ = True
 
-MEDIA_ROOT = 'opensr/media/'
+MEDIA_ROOT = '/media/'
 
 MEDIA_URL = '/media/'
 
