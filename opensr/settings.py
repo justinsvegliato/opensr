@@ -17,18 +17,13 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'opensr',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-        'OPTIONS': { 
-            "init_command": "SET storage_engine=INNODB; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED;", 
-        },
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'df7nj5p1jglob6',
+        'USER': 'qheuencoyuajbr',
+        'PASSWORD': 'qghbFypvIZQHz1HCdmrP-nSnZz',
+        'HOST': 'ec2-54-227-243-78.compute-1.amazonaws.com',
+        'PORT': '5432',
     },
-    
-#    SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED
 }
 
 TIME_ZONE = 'America/New_York'
@@ -43,7 +38,7 @@ USE_L10N = True
  
 USE_TZ = True
 
-MEDIA_ROOT = '/media/'
+MEDIA_ROOT = 'opensr/media/'
 
 MEDIA_URL = '/media/'
 
@@ -89,7 +84,7 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-CKEDITOR_UPLOAD_PATH = '/media/images'
+CKEDITOR_UPLOAD_PATH = 'opensr/media/images'
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -150,7 +145,7 @@ LOGGING = {
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config(default='postgres://qheuencoyuajbr:qghbFypvIZQHz1HCdmrP-nSnZz@ec2-54-227-243-78.compute-1.amazonaws.com/df7nj5p1jglob6')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -159,11 +154,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
-# import os
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# STATIC_ROOT = 'staticfiles'
-# STATIC_URL = '/static/'
-# 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
