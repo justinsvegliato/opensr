@@ -60,6 +60,8 @@ class TestAdmin(admin.ModelAdmin):
     
 class BlockAdmin(admin.ModelAdmin):
     ordering = ('block_name',)
+    search_fields = ('test__test_name', )
+    list_filter = ('test__test_name', )
     list_display = ('block_name', 'test')
 
 class PageAdmin(FlatPageAdmin):

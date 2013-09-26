@@ -7,6 +7,7 @@ from django.contrib.flatpages.models import FlatPage
 from django.contrib.flatpages.admin import FlatpageForm
 
 class IndexLoginForm(ModelForm):
+    
     password = CharField(
         widget=PasswordInput(
             attrs = {
@@ -40,6 +41,7 @@ class IndexLoginForm(ModelForm):
         return password
 
 class EntranceLoginForm(ModelForm):
+    
     password = CharField(
         widget=PasswordInput(
             attrs={
@@ -74,6 +76,7 @@ class EntranceLoginForm(ModelForm):
         return password
 
 class AtLeastOneFormSet(BaseInlineFormSet):
+    
     def clean(self):
         super(AtLeastOneFormSet, self).clean()
         non_empty_forms = 0
