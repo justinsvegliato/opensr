@@ -18,10 +18,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'df7nj5p1jglob6',
-        'USER': 'qheuencoyuajbr',
-        'PASSWORD': 'qghbFypvIZQHz1HCdmrP-nSnZz',
-        'HOST': 'ec2-54-227-243-78.compute-1.amazonaws.com',
+        'NAME': 'd9dknvee3ffmuo',
+        'USER': 'jhywlbzhazasdq',
+        'PASSWORD': 'N2JvKf6lUe_oL3pob-mldZjFDB',
+        'HOST': 'ec2-107-20-206-36.compute-1.amazonaws.com',
         'PORT': '5432',
     },
 }
@@ -145,7 +145,7 @@ LOGGING = {
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config(default='postgres://qheuencoyuajbr:qghbFypvIZQHz1HCdmrP-nSnZz@ec2-54-227-243-78.compute-1.amazonaws.com/df7nj5p1jglob6')
+DATABASES['default'] =  dj_database_url.config(default='postgres://jhywlbzhazasdq:N2JvKf6lUe_oL3pob-mldZjFDB@ec2-107-20-206-36.compute-1.amazonaws.com/d9dknvee3ffmuo')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
