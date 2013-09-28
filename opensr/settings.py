@@ -84,7 +84,7 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-CKEDITOR_UPLOAD_PATH = 'opensr/media/images'
+CKEDITOR_UPLOAD_PATH = get_absolute_url('media/images')
 
 CKEDITOR_CONFIGS = {
     'default': {
