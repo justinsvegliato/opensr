@@ -116,7 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'test',
     'colorful',
-    'ckeditor',
+   # 'ckeditor',
 )
 
 LOGGING = {
