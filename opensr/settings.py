@@ -38,7 +38,7 @@ USE_L10N = True
  
 USE_TZ = True
 
-MEDIA_ROOT = '/media/'
+MEDIA_ROOT = '/opensr/media/'
 
 MEDIA_URL = '/media/'
 
@@ -84,7 +84,7 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-#CKEDITOR_UPLOAD_PATH = get_absolute_url('opensr/media/images')
+CKEDITOR_UPLOAD_PATH = get_absolute_url('media/images')
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -116,7 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'test',
     'colorful',
-   # 'ckeditor',
+    'ckeditor',
 )
 
 LOGGING = {
@@ -142,23 +142,3 @@ LOGGING = {
         },
     }
 }
-
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config(default='postgres://jhywlbzhazasdq:N2JvKf6lUe_oL3pob-mldZjFDB@ec2-107-20-206-36.compute-1.amazonaws.com/d9dknvee3ffmuo')
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
-
-# Static asset configuration
-import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
