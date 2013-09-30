@@ -69,7 +69,7 @@ class Category(models.Model):
     
 class Block(models.Model):
     block_name = models.CharField(max_length=60, unique=True)
-    instructions = TextField()#RichTextField()
+    instructions = models.TextField()#RichTextField()
     order = models.IntegerField()   
     practice = models.BooleanField(default=False)
     number_of_stimuli = models.IntegerField()
