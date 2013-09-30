@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.flatpages.models import FlatPage
 from colorful.fields import RGBColorField
-from ckeditor.fields import RichTextField
+#from ckeditor.fields import RichTextField
 
 class ParticipantManager(models.Manager):
     def create_participant(self, experimental_group, test):
@@ -69,7 +69,7 @@ class Category(models.Model):
     
 class Block(models.Model):
     block_name = models.CharField(max_length=60, unique=True)
-    instructions = RichTextField()
+    instructions = TextField()#RichTextField()
     order = models.IntegerField()   
     practice = models.BooleanField(default=False)
     number_of_stimuli = models.IntegerField()
