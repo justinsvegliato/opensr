@@ -2,7 +2,7 @@ from django.core.exceptions import (ValidationError, ObjectDoesNotExist)
 from models import (Test, Block)
 from django.forms import (ModelForm, PasswordInput, CharField, ModelChoiceField, Select)
 from django.forms.models import BaseInlineFormSet    
-from ckeditor.widgets import CKEditorWidget
+#from ckeditor.widgets import CKEditorWidget
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.flatpages.admin import FlatpageForm
 
@@ -90,6 +90,6 @@ class PageForm(FlatpageForm):
     
     class Meta:
         model = FlatPage
-        widgets = {
-            'content': CKEditorWidget()
-        }
+        #widgets = {
+        #    'content': CKEditorWidget()
+        #}
