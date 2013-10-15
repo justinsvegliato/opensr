@@ -1,0 +1,10 @@
+{"ts":1381859658477,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1381859679784,"patch":[[{"diffs":[[1,"#logo {\n    height: 15px;\n}"]],"start1":0,"start2":0,"length1":0,"length2":27}]],"length":27,"saved":false}
+{"ts":1381859741486,"patch":[[{"diffs":[[0," 15px;\n}"],[1,"\nbody {\n    padding-top: 60px;\n    padding-bottom: 40px;\n}"]],"start1":19,"start2":19,"length1":8,"length2":66}]],"length":85,"saved":false}
+{"ts":1381859749916,"patch":[[{"diffs":[[0,"ht: "],[-1,"15"],[1,"30"],[0,"px;\n"]],"start1":16,"start2":16,"length1":10,"length2":10}]],"length":85,"saved":false}
+{"ts":1381859768392,"patch":[[{"diffs":[[0,"ht: "],[-1,"3"],[1,"2"],[0,"0px;"]],"start1":16,"start2":16,"length1":9,"length2":9}]],"length":85,"saved":false}
+{"ts":1381859782831,"patch":[[{"diffs":[[0,";\n}\n"],[1,"/*"],[0,"body {"],[-1,"\n"],[1,"*/\n/*"],[0,"    "]],"start1":24,"start2":24,"length1":15,"length2":21},{"diffs":[[0,"p: 60px;"],[-1,"\n"],[1,"*/\n/*"],[0,"    padd"]],"start1":55,"start2":55,"length1":17,"length2":21},{"diffs":[[0,"ottom: 40px;"],[-1,"\n}"],[1,"*/\n/*}*/"]],"start1":81,"start2":81,"length1":14,"length2":20}]],"length":101,"saved":false}
+{"ts":1381859792758,"patch":[[{"diffs":[[0,";\n}\n"],[-1,"/*"],[0,"body {"],[-1,"*/\n/*"],[1,"\n"],[0,"    "]],"start1":24,"start2":24,"length1":21,"length2":15},{"diffs":[[0,"p: 60px;"],[-1,"*/\n/*"],[1,"\n"],[0,"    padd"]],"start1":49,"start2":49,"length1":21,"length2":17},{"diffs":[[0,"0px;"],[-1,"*/\n/*}*/"],[1,"\n}"]],"start1":79,"start2":79,"length1":12,"length2":6}]],"length":85,"saved":false}
+{"ts":1381859795005,"patch":[[{"diffs":[[0,"ht: "],[-1,"2"],[1,"3"],[0,"0px;"]],"start1":16,"start2":16,"length1":9,"length2":9}]],"length":85,"saved":false}
+{"ts":1381859797348,"patch":[[{"diffs":[[0,"op: "],[-1,"6"],[1,"8"],[0,"0px;"]],"start1":48,"start2":48,"length1":9,"length2":9}]],"length":85,"saved":false}
+{"ts":1381860005474,"patch":[[{"diffs":[[0,"30px;\n}\n"],[1,".navbar-brand {\n    font-size: 25px;\n}\n"],[0,"body {\n "]],"start1":20,"start2":20,"length1":16,"length2":55}]],"length":124,"saved":false}
