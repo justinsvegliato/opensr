@@ -8,9 +8,11 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 
 class ImageStimulusInline(admin.TabularInline):
     model = ImageStimulus
+    verbose_name_plural='Image Stimuli'
     
 class TextStimulusInline(admin.TabularInline):
     model = TextStimulus 
+    verbose_name_plural='Text Stimuli'
             
 class ExperimentalGroupInline(admin.StackedInline):
     model = ExperimentalGroup

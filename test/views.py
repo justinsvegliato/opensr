@@ -111,7 +111,8 @@ def test(request):
                 block_trials.delete()
         return blocks
     
-    test = request.session['test']    
+    test = request.session['test']
+    test.password = None
     blocks = get_blocks(test) 
                 
     category_ids = []
@@ -131,7 +132,7 @@ def test(request):
     context_instance = RequestContext(request)
     context_instance.autoescape=False    
     object_context = {
-       'test': serializers.serialize('json', [test]),
+        'test': serializers.serialize('json', [test]),
         'blocks': serializers.serialize('json', blocks),
         'categories': serializers.serialize('json', categories),
         'stimuli': serializers.serialize('json', stimuli),

@@ -12,3 +12,7 @@
 {"ts":1381866394423,"patch":[[{"diffs":[[0,"nt'].save()\n"],[1,"    request.modified = True\n"],[0,"    return H"]],"start1":7100,"start2":7100,"length1":24,"length2":52}]],"length":7633,"saved":false}
 {"ts":1381866410386,"patch":[[{"diffs":[[0,"est=test"],[-1,", "],[1,")."],[0,"latest('"]],"start1":2819,"start2":2819,"length1":18,"length2":18}]],"length":7633,"saved":false}
 {"ts":1381866491865,"patch":[[{"diffs":[[0,"est."],[-1,"modified = True"],[1,"session['participant'] = request.session['participant']"],[0,"\n   "]],"start1":7120,"start2":7120,"length1":23,"length2":63}]],"length":7673,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1381874730444,"patch":[[{"diffs":[[0,"['test']"],[1,"\n"],[0,"    "],[1,"test.password = "],[0,"\n    blo"]],"start1":4483,"start2":4483,"length1":20,"length2":37}]],"length":7690,"saved":false}
+{"ts":1381874731427,"patch":[[{"diffs":[[0,"sword = "],[1,"null"],[0,"\n    blo"]],"start1":4504,"start2":4504,"length1":16,"length2":20}]],"length":7694,"saved":false}
+{"ts":1381874739641,"patch":[[{"diffs":[[0,"d = "],[-1,"null"],[1,"None"],[0,"\n   "]],"start1":4508,"start2":4508,"length1":12,"length2":12}]],"length":7694,"saved":false}
+{"ts":1381874774565,"patch":[[{"diffs":[[0," = {\n       "],[1," "],[0,"'test': seri"]],"start1":5378,"start2":5378,"length1":24,"length2":25}]],"length":7695,"saved":false}

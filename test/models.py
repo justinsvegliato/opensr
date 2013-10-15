@@ -72,7 +72,7 @@ class Block(models.Model):
     instructions = RichTextField()
     order = models.IntegerField()   
     practice = models.BooleanField(default=False)
-    number_of_stimuli = models.IntegerField()
+    number_of_stimuli = models.IntegerField(verbose_name='Number of trials')
     test = models.ForeignKey(Test)
     primary_right_category = models.ForeignKey(Category, related_name='primary right category')
     secondary_right_category = models.ForeignKey(Category, related_name='secondary right category', null=True, blank=True)
