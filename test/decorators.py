@@ -16,7 +16,7 @@ def has_no_participant_id(f, request, *args):
 
 @decorator
 def has_completed_test(f, request):
-    if request.session['participant'].has_completed_test:
+    if not request.session['participant'].has_completed_test:
         return get_redirection(request)  
     return f(request)
 
@@ -46,4 +46,3 @@ def get_redirection(request):
             return redirect(reverse('test'))
         return redirect(reverse('informed_consent'))
     return redirect(reverse('index'))
-    

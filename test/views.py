@@ -71,7 +71,7 @@ def experimental_group(request):
     if not 'participant' in request.session:
         def get_next_group():
             try:
-                latest_group_id = Participant.objects.latest('id').experimental_group.id
+                latest_group_id = Participant.objects.filter(test=test).latest('id').experimental_group.id
                 for i in range(len(groups)):
                     if groups[i].id == latest_group_id:
                        return groups[0] if (i == (len(groups) - 1)) else groups[i + 1]
@@ -174,6 +174,7 @@ def record_trial(request):
 def record_test_status(request):
     request.session['participant'].has_completed_test = (request.GET['test_status'] == 'true')
     request.session['participant'].save()
+    request.session['participant'] = request.session['participant']
     return HttpResponse('OK')
 
 @has_test_id

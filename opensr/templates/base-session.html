@@ -4,6 +4,6 @@
 {% block navigation-bar %}
 <form class="navbar-form navbar-right" role="form" method="post" action="{% url 'exit' %}">
     {% csrf_token %}
-    <button type="submit" class="btn btn-success">Exit Test</button>
+    <button type="submit" class="btn btn-danger">Exit Test</button>
 </form>
 {% endblock navigation-bar %}
