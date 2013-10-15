@@ -24,7 +24,7 @@ class IndexLoginForm(ModelForm):
             'id': 'test',
             'class': 'form-control',
         }),
-        queryset = Test.objects.filter(is_active=True, block__isnull=False),
+        queryset = Test.objects.filter(is_active=True, block__isnull=False).distinct(),
         empty_label = "Select a test...",
         label = '',
     )
