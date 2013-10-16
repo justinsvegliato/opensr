@@ -69,6 +69,11 @@ class BlockAdmin(admin.ModelAdmin):
 
 class PageAdmin(FlatPageAdmin):
     form = PageForm
+    
+    def formfield_for_manytomany(self, db_field, request=None, **kwargs):
+        if db_field.name == "sites":
+            kwargs["initial"] = [Site.objects.get_current()]
+        return super(PageAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 class ParticipantAdmin(admin.ModelAdmin):
     actions = [export_as_csv]

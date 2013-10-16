@@ -1,6 +1,9 @@
+from django.forms import (
+    ModelForm, PasswordInput, CharField, ModelChoiceField, 
+    Select, TextInput, BooleanField, CheckboxInput, SelectMultiple
+)
 from django.core.exceptions import (ValidationError, ObjectDoesNotExist)
 from models import (Test, Block)
-from django.forms import (ModelForm, PasswordInput, CharField, ModelChoiceField, Select)
 from django.forms.models import BaseInlineFormSet    
 from ckeditor.widgets import CKEditorWidget
 from django.contrib.flatpages.models import FlatPage
@@ -88,9 +91,37 @@ class AtLeastOneFormSet(BaseInlineFormSet):
         
 class PageForm(FlatpageForm):
     
+    template_name = CharField(
+        widget=TextInput(
+            attrs={
+                'disabled': 'true',
+        }), 
+        required=False
+    )   
+    
+    enable_comments = BooleanField(
+        widget=CheckboxInput(
+            attrs={
+                'disabled': 'true',
+        }),
+        required=False
+    )
+    
+    registration_required = BooleanField(
+        widget=CheckboxInput(
+            attrs={
+                'disabled': 'true',
+        }),
+        required=False
+    )   
+    
     class Meta:
         model = FlatPage
         widgets = {
-            'content': CKEditorWidget()
+            'content': CKEditorWidget(),
+            'sites': SelectMultiple(
+                attrs={
+                    'readonly': 'readonly',
+            }), 
         }
         

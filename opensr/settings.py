@@ -32,6 +32,10 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
+SITE_URL = 'https://opensr-c9-justinsvegliato.c9.io/'
+
+SITE_NAME = 'OpenSR'
+
 USE_I18N = True
 
 USE_L10N = True
@@ -106,7 +110,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
-    #'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.flatpages',
@@ -142,3 +146,10 @@ LOGGING = {
         },
     }
 }
+
+from django.contrib.sites.models import Site
+
+site = Site.objects.all()[0]
+site.domain = SITE_URL
+site.name = SITE_NAME
+site.save()
