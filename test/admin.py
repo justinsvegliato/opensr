@@ -5,6 +5,7 @@ from test.admin_actions import export_as_csv
 from test.models import (Test, Block, ImageStimulus, TextStimulus, ExperimentalGroup, Trial, Category, Participant)
 from test.forms import (AtLeastOneFormSet, PageForm)
 from django.contrib.flatpages.admin import FlatPageAdmin
+from django.contrib.sites.models import Site
 
 class ImageStimulusInline(admin.TabularInline):
     model = ImageStimulus
@@ -99,3 +100,4 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(Block, BlockAdmin)
 admin.site.register(Participant, ParticipantAdmin)
+admin.site.unregister(Site)

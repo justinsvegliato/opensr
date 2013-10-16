@@ -93,3 +93,4 @@ class PageForm(FlatpageForm):
         widgets = {
             'content': CKEditorWidget()
         }
+        

@@ -155,6 +155,7 @@ Test.handleCorrectAnswer = function() {
     }
     Test.previousStimulus = Test.stimulus;
     Test.stimulusCount++;
+    Test.correct = true;
     $("#status").css("visibility", "hidden");
 }
 
