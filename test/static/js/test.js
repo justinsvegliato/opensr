@@ -1,6 +1,5 @@
 $(document).ready(function() {
     Test.initializeInstructionPhase();
-    
     $(document).keypress(function(event) {
         if (Test.phase !== Test.Phase.TERMINATION) {
             var keyPressed = event.keyCode ? event.keyCode : event.which;
