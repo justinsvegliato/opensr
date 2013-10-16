@@ -32,7 +32,7 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-SITE_URL = 'https://opensr-c9-justinsvegliato.c9.io/'
+SITE_URL = 'opensr-c9-justinsvegliato.c9.io/'
 
 SITE_NAME = 'OpenSR'
 

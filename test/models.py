@@ -26,6 +26,7 @@ class TrialManager(models.Manager):
         )
     
 class Test(models.Model):
+    
     test_name = models.CharField(max_length=60, unique=True)
     introduction_page = models.ForeignKey(FlatPage, primary_key=False, related_name='test page', null=True, blank=True)
     informed_consent_page = models.ForeignKey(FlatPage, primary_key=False, related_name='agreement page')

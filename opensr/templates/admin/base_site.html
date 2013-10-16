@@ -1,10 +1,10 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
-{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
+{% block title %}{% trans 'OpenSR Dashboard' %}{% endblock %}
 
 {% block branding %}
-    <a href="{% url 'admin:index' %}" class="brand" id="site-name">{% trans 'OpenSR Administration' %}</a>
+    <a href="{% url 'admin:index' %}" class="brand" id="site-name">{% trans 'OpenSR Dashboard' %}</a>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
