@@ -138,7 +138,7 @@ def test(request):
         'stimuli': serializers.serialize('json', stimuli),
         'left_key_bind': test.left_key_bind.upper(),
         'right_key_bind': test.right_key_bind.upper(),
-        'next_page_url': '/confirmation/' if not test.survey_url else test.survey_url,
+        'next_page_url': '/confirmation/' if not test.survey_url else test.survey_url + "?c=" + str(request.session['participant'].id),
         'media_url': settings.MEDIA_URL,
     }  
     return render(request, 'test/test.html', object_context, context_instance=context_instance)
