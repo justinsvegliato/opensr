@@ -20,7 +20,7 @@
     <div class="row-fluid dashboard-tools">   
         <div class="app-list">
             {% if app_list %}
-                <h2>{% trans 'Apps' %}</h2>
+                <h2>{% trans 'Services' %}</h2>
                 {% for app in app_list %}
                     <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}" class="table table-striped table-bordered table-condensed">
                         <thead>
@@ -28,7 +28,11 @@
                             <th colspan="4">
                                 <h3>
                                     <a href="{{ app.app_url }}" class="section" title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">
-                                        {% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}
+                                        {% ifequal app.name "Auth" %}
+                                                {% trans 'Authentication' %}
+                                        {% else %}
+                                                {% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}
+                                        {% endifequal %}
                                     </a>
                                 </h3>
                             </th>

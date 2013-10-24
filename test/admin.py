@@ -42,9 +42,6 @@ class TestForm(forms.ModelForm):
     
     class Meta:
         model = Test
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
 
 class CategoryAdmin(admin.ModelAdmin):
     ordering = ('category_name',)

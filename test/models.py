@@ -26,17 +26,16 @@ class TrialManager(models.Manager):
         )
     
 class Test(models.Model):
-    
     test_name = models.CharField(max_length=60, unique=True)
     introduction_page = models.ForeignKey(FlatPage, primary_key=False, related_name='test page', null=True, blank=True)
     informed_consent_page = models.ForeignKey(FlatPage, primary_key=False, related_name='agreement page')
-    password = models.CharField(max_length=32)
+    password = models.CharField(max_length=32, verbose_name='passcode')
     is_active = models.BooleanField(default=True)
     left_key_bind = models.CharField(max_length=1)
     right_key_bind = models.CharField(max_length=1)
     survey_url = models.URLField(null=True, blank=True)    
     confirmation_page = models.ForeignKey(FlatPage, primary_key=False, related_name='confirmation page')
-    
+        
     def __unicode__(self):
         return self.test_name
     
@@ -53,6 +52,9 @@ class Participant(models.Model):
     test = models.ForeignKey(Test)
     has_completed_test = models.BooleanField(default=False)
     objects = ParticipantManager()
+    
+    class Meta:
+        verbose_name = "result"
     
     def __unicode__(self):
         return "Participant"

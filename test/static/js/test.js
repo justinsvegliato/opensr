@@ -72,7 +72,7 @@ Test.handleBlock = function() {
             return block;
         }
     }
-}
+};
 
 Test.handleStimulus = function(leftCategories, rightCategories) {
     var categoryIds = Test.getIds(leftCategories).concat(Test.getIds(rightCategories));
@@ -85,7 +85,7 @@ Test.handleStimulus = function(leftCategories, rightCategories) {
           : '<span class="text-stimulus">' + stimulus.fields.value + "</span>";
     $("#stimulus").html(html);
     return stimulus;
-}
+};
 
 Test.handleCategory = function(block, categoryType) {
     var filteredCategories = $.grep(Test.categories, function(n) {
@@ -93,13 +93,14 @@ Test.handleCategory = function(block, categoryType) {
     });
     $("#primary-" + categoryType + "-category").html(filteredCategories[0].fields.category_name).css("color", filteredCategories[0].fields.color);
     if (filteredCategories.length > 1) {
-        $("#secondary-" + categoryType + "-category").html(filteredCategories[1].fields.category_name).css("color", filteredCategories[1].fields.color);
+        $("#secondary-" + categoryType + "-category").show().html(filteredCategories[1].fields.category_name).css("color", filteredCategories[1].fields.color);
         $("#" + categoryType + "-separator").show();
     } else {
+        $("#secondary-" + categoryType + "-category").hide();
         $("#" + categoryType + "-separator").hide();
     }
     return filteredCategories;
-}
+};
 
 Test.initializeTerminationPhase = function() {
     Test.phase = Test.Phase.TERMINATION;
@@ -107,7 +108,7 @@ Test.initializeTerminationPhase = function() {
     $("#termination-phase-container").show();
     var data = {'test_status': true};
     $.get("../record/test-status/", data);
-}
+};
 
 Test.initializeInstructionPhase = function() {
     Test.phase = Test.Phase.INSTRUCTION;
@@ -117,7 +118,7 @@ Test.initializeInstructionPhase = function() {
     $("#testing-phase-container").hide();
     $("#instruction-phase-container").show();
     $("#status").css("visibility", "hidden");
-}
+};
 
 Test.initializeTestingPhase = function() {
     Test.phase = Test.Phase.TESTING;
@@ -130,7 +131,7 @@ Test.initializeTestingPhase = function() {
     Test.correct = true;
     $("#instruction-phase-container").hide();
     $("#testing-phase-container").show();
-}
+};
 
 Test.handleCorrectAnswer = function() {
     function record_trial(block, leftCategories, rightCategories, stimulus, latency, correct) {
@@ -157,12 +158,12 @@ Test.handleCorrectAnswer = function() {
     Test.stimulusCount++;
     Test.correct = true;
     $("#status").css("visibility", "hidden");
-}
+};
 
 Test.handleIncorrectAnswer = function() {
     Test.correct = false;
     $("#status").css("visibility", "visible");
-}
+};
 
 Test.getIds = function(list) {
     var ids = [];
@@ -170,4 +171,4 @@ Test.getIds = function(list) {
         ids.push(value.pk);
     });
     return ids;
-}
+};
