@@ -2,7 +2,21 @@ from django.db import models
 from django.contrib.flatpages.models import FlatPage
 from colorful.fields import RGBColorField
 from ckeditor.fields import RichTextField
+from django.forms import (fields, TextInput)
 
+class MultipleTextField(fields.MultiValueField):
+    widget = TextInput
+
+    def __init__(self, *args, **kwargs):
+        all_fields = (
+            fields.CharField(),
+            fields.CharField(),
+        )
+        super(MultipleTextField, self).__init__(all_fields, *args, **kwargs)
+
+    def compress(self, data_list):
+        return None
+        
 class ParticipantManager(models.Manager):
     def create_participant(self, experimental_group, test):
         return self.create(experimental_group=experimental_group, test=test)
@@ -33,7 +47,9 @@ class Test(models.Model):
     is_active = models.BooleanField(default=True)
     left_key_bind = models.CharField(max_length=1)
     right_key_bind = models.CharField(max_length=1)
-    survey_url = models.URLField(null=True, blank=True)    
+    # survey_url = models.URLField(null=True, blank=True)    
+    survey_url = MultipleTextField()
+    
     confirmation_page = models.ForeignKey(FlatPage, primary_key=False, related_name='confirmation page')
         
     def __unicode__(self):
