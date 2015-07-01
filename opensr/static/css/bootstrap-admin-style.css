@@ -2,3 +2,18 @@
     content: " *";
     color: #c31c1c;
 }
+.sortedm2m-container p.selector-filter {
+    display: none !important;
+}
+
+ul.sortedm2m input {
+    display: none !important;
+}
+
+.sortedm2m-container p.help {
+    display: none !important;
+}
+
+ul.sortedm2m {
+    min-height: 0px !important;
+}

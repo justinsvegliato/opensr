@@ -3,7 +3,7 @@ from django.forms import (
     Select, TextInput, BooleanField, CheckboxInput, SelectMultiple
 )
 from django.core.exceptions import (ValidationError, ObjectDoesNotExist)
-from models import (Test, Block)
+from models import (Test, Block, Stimulus)
 from django.forms.models import BaseInlineFormSet    
 from ckeditor.widgets import CKEditorWidget
 from django.contrib.flatpages.models import FlatPage
@@ -124,4 +124,3 @@ class PageForm(FlatpageForm):
                     'readonly': 'readonly',
             }), 
         }
-        

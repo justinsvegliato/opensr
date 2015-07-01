@@ -50,7 +50,10 @@
         </div>
 
         <div class="row">
-            <div id="status" class="text-center">
+            <div id="rightStatus" class="text-center">
+                <img src="/static/img/right.png" alt="Right Answer" />
+            </div>
+            <div id="wrongStatus" class="text-center">
                 <img src="/static/img/wrong.png" alt="Wrong Answer" />
             </div>
         </div>
@@ -81,6 +84,7 @@
     var categories = {{ categories }};
     var stimuli = {{ stimuli }};
     var media_url = {{ media_url }};
+    var stimuli_orders = {{ stimuli_orders }};
 </script>
 <script src="{% static 'js/test.js' %}"></script>
 {% endblock javascript %}

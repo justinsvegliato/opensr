@@ -6,9 +6,10 @@ from django.http import HttpResponse
 from django.conf import settings
 from itertools import chain
 from django.shortcuts import (render, redirect)
-from test.models import (Test, ExperimentalGroup, Participant, Block, Category, ImageStimulus, TextStimulus, Trial)
+from test.models import (Test, ExperimentalGroup, Participant, Block, Category, Trial, StimuliOrder)
 from test.forms import (IndexLoginForm, EntranceLoginForm)
 from test.decorators import (has_participant_id, has_completed_test, has_not_completed_test, has_no_participant_id, has_test_id, has_no_test_id)
+import random
 
 @has_no_participant_id
 @has_no_test_id
@@ -110,13 +111,15 @@ def test(request):
             else:
                 block_trials.delete()
         return blocks
-    
+
     test = request.session['test']
     test.password = None
     blocks = get_blocks(test) 
                 
+    stimuli_orders = []
     category_ids = []
     for block in blocks:
+        stimuli_orders.append(StimuliOrder.objects.filter(block=block)[0])
         category_ids.append(block.primary_left_category_id)
         category_ids.append(block.primary_right_category_id)
         if not block.primary_left_category_id is None:
@@ -125,22 +128,25 @@ def test(request):
             category_ids.append(block.secondary_right_category_id)
           
     categories = Category.objects.filter(id__in=category_ids)   
-    image_stimuli = ImageStimulus.objects.filter(category_id__in=category_ids)
-    text_stimuli = TextStimulus.objects.filter(category_id__in=category_ids)
-    stimuli = list(chain(image_stimuli, text_stimuli))
+    
+    stimuli = set()
+    for stimuli_order in stimuli_orders:
+        stimuli = stimuli.union(set(stimuli_order.stimuli.get_queryset()))
     
     context_instance = RequestContext(request)
     context_instance.autoescape=False    
+    
     object_context = {
         'test': serializers.serialize('json', [test]),
         'blocks': serializers.serialize('json', blocks),
         'categories': serializers.serialize('json', categories),
         'stimuli': serializers.serialize('json', stimuli),
+        'stimuli_orders': serializers.serialize('json', stimuli_orders),
         'left_key_bind': test.left_key_bind.upper(),
         'right_key_bind': test.right_key_bind.upper(),
         'next_page_url': '/confirmation/' if not test.survey_url else test.survey_url + "?c=" + str(request.session['participant'].id),
         'media_url': settings.MEDIA_URL,
-    }  
+    }
     return render(request, 'test/test.html', object_context, context_instance=context_instance)
 
 @has_participant_id

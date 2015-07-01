@@ -2,19 +2,16 @@ from django.contrib import admin
 from django import forms
 from django.contrib.flatpages.models import FlatPage
 from test.admin_actions import export_as_csv
-from test.models import (Test, Block, ImageStimulus, TextStimulus, ExperimentalGroup, Trial, Category, Participant)
+from test.models import (Test, Block, ExperimentalGroup, Trial, Stimulus, Category, Participant, StimuliOrder)
 from test.forms import (AtLeastOneFormSet, PageForm)
 from django.contrib.flatpages.admin import FlatPageAdmin
 from django.contrib.sites.models import Site
-
-class ImageStimulusInline(admin.TabularInline):
-    model = ImageStimulus
-    verbose_name_plural='Image Stimuli'
     
-class TextStimulusInline(admin.TabularInline):
-    model = TextStimulus 
-    verbose_name_plural='Text Stimuli'
-            
+class StimulusInline(admin.TabularInline):
+    model = Stimulus 
+    fields = ('word', 'image')
+    verbose_name_plural='Stimulus'
+    
 class ExperimentalGroupInline(admin.StackedInline):
     model = ExperimentalGroup
     extra = 1
@@ -47,7 +44,7 @@ class CategoryAdmin(admin.ModelAdmin):
     ordering = ('category_name',)
     list_display = ('category_name',)
     inlines = [
-        ImageStimulusInline, TextStimulusInline
+        StimulusInline
     ]
     
 class TestAdmin(admin.ModelAdmin):  
@@ -95,6 +92,16 @@ class ParticipantAdmin(admin.ModelAdmin):
         if 'delete_selected' in actions:
             del actions['delete_selected']
         return actions
+        
+class StimuliOrderAdmin(admin.ModelAdmin):
+    model=StimuliOrder
+    exclude = ('block',)
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+        
+    def has_add_permission(self, request, obj=None):
+        return False
     
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, PageAdmin)
@@ -102,4 +109,5 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(Block, BlockAdmin)
 admin.site.register(Participant, ParticipantAdmin)
+admin.site.register(StimuliOrder, StimuliOrderAdmin)
 admin.site.unregister(Site)

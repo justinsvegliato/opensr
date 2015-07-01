@@ -10,8 +10,11 @@
 #category-container {
     height: 125px;
 }
-#status {
+#wrongStatus {
     height: 60px;
+}
+#rightStatus {
+    height: 70px;
 }
 #start-hint {
     font-weight: bolder;

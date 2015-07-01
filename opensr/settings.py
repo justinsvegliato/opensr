@@ -32,7 +32,7 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-SITE_URL = 'opensr-c9-justinsvegliato.c9.io/'
+SITE_URL = 'sp'
 
 SITE_NAME = 'OpenSR'
 
@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'test',
     'colorful',
     'ckeditor',
+    'sortedm2m'
 )
 
 LOGGING = {
