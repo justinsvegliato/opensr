@@ -10,7 +10,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Your name', 'Your email'),
+    ('Justin Svegliato', 'justin.svegliato@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -18,11 +18,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Put the data from the Database field from Heroku here',
-        'USER': 'Put the data from the User field from Heroku here',
-        'PASSWORD': 'Put the data from the Password field from Heroku Here',
-        'HOST': 'Put the data from the Host field from Heroku here',
-        'PORT': 'Put the data from the Port field from Heroku here',
+        'NAME': 'da49g8aro6jhpi',
+        'USER': 'rzrbugbtuyuzvu',
+        'PASSWORD': 'lK4Dn42ALtyEKZqmu3yo1VflVG',
+        'HOST': 'ec2-54-204-13-220.compute-1.amazonaws.com',
+        'PORT': '5432',
     },
 }
 
@@ -148,9 +148,9 @@ LOGGING = {
     }
 }
 
-from django.contrib.sites.models import Site
+# from django.contrib.sites.models import Site
 
-site = Site.objects.all()[0]
-site.domain = SITE_URL
-site.name = SITE_NAME
-site.save()
+# site = Site.objects.all()[0]
+# site.domain = SITE_URL
+# site.name = SITE_NAME
+# site.save()
