@@ -10,7 +10,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Justin Svegliato', 'justin.svegliato1@marist.edu'),
+    ('Your name', 'Your email'),
 )
 
 MANAGERS = ADMINS
@@ -18,11 +18,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd9dknvee3ffmuo',
-        'USER': 'jhywlbzhazasdq',
-        'PASSWORD': 'N2JvKf6lUe_oL3pob-mldZjFDB',
-        'HOST': 'ec2-107-20-206-36.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'NAME': 'Put the data from the Database field from Heroku here',
+        'USER': 'Put the data from the User field from Heroku here',
+        'PASSWORD': 'Put the data from the Password field from Heroku Here',
+        'HOST': 'Put the data from the Host field from Heroku here',
+        'PORT': 'Put the data from the Port field from Heroku here',
     },
 }
 
