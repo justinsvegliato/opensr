@@ -1,7 +1,4 @@
-# OpenSR
-// TODO
-
-# Installation
+# Basic Installation
 
 To install OpenSR, we just need to do the steps below:
 
@@ -25,11 +22,11 @@ To install OpenSR, we just need to do the steps below:
   
   6. Click *Create workspace* to build your workspace using the information you just supplied. This might take a few minutes and will probably show you a few loading displays.
   
-5. In the bottom of your screen, you'll see a tab labeled *bash.* In this console, we'll simply type the text in the gray box below and then press enter. Don't worry about the details of what this does. It's just installing a few things that we need on the server. **If you're asked a yes or no question, simply type *Y* and then press enter!** Otherwise, the installation won't continue.
+5. In the bottom of your screen, you'll see a tab labeled *bash.* In this console, we'll simply type the text in the gray box below and then press enter. Don't worry about the details of what this does. It's just installing a few things that we need on the server. **If you're asked a yes or no question, simply type *Y* and then press enter!** Otherwise, the installation won't continue. 
 
-```bash
-./install.sh
-```
+  ```bash
+  ./install.sh
+  ```
 
 6. Now we need to get a free database from Heroku. To do that, create an Heroku account by clicking (here)[https://signup.heroku.com/www-home-top]. Again, make sure to go to your email to activate the account. After clicking through the links from the activation email, you should end up at your Heroku dashboard. If not, click (here)[https://id.heroku.com/login] to login.
 
@@ -47,49 +44,49 @@ To install OpenSR, we just need to do the steps below:
 
 9. In this file, we only need to modify a few things. Let's start with the database details. Change the information between the single quotes (*'*) for *NAME*, *USER*, *PASSWORD*, *HOST*, and *PORT*. This information is listed on the Heroku page that we kept open from before. Just copy and paste the database details to the *settings.py* file that we have open. Be careful! If we accidentally delete a *'* or another character, it might mess up our program!
 
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Put the data from the Database field from Heroku here',
-        'USER': 'Put the data from the User field from Heroku here',
-        'PASSWORD': 'Put the data from the Password field from Heroku Here',
-        'HOST': 'Put the data from the Host field from Heroku here',
-        'PORT': 'Put the data from the Port field from Heroku here',
-    },
-}
-```
+  ```python
+  DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+          'NAME': 'Put the data from the Database field from Heroku here',
+          'USER': 'Put the data from the User field from Heroku here',
+          'PASSWORD': 'Put the data from the Password field from Heroku Here',
+          'HOST': 'Put the data from the Host field from Heroku here',
+          'PORT': 'Put the data from the Port field from Heroku here',
+      },
+  }
+  ```
 
 10. While we're at it, let's also change the administrators of the system. Just replace *Your name* and *Your email* with your own information. Again, make sure to be careful! 
 
-```python
-ADMINS = (
-    ('Your name', 'Your email'),
-)
-```
+  ```python
+  ADMINS = (
+      ('Your name', 'Your email'),
+  )
+  ```
 
 11. Once we've made those changes, we need to save the file. Simply select *File* at the top of the screen and then click *Save*. All of our information should now be ready!
 
 12. Next, we need to run one more command in the console at the bottom of the Cloud9 workspace. Just type the text in the gray box below and press enter. If any prompts come up, enter *yes*. You might have to create a "superuser" which is basically an administrator. Just use whatever credentials you feel are appropriate. This could take a few minutes.
 
-```bash
-python manage.py syncdb
-```
+  ```bash
+  python manage.py syncdb
+  ```
 
 13. We're done! To run our application, just enter the text in the gray box below. This will run out application. You can quit the server by pressing the *CONTROL* key and *C* together.
  
-```bash
-python manage.py runserve $IP:$PORT
-```
+  ```bash
+  python manage.py runserve $IP:$PORT
+  ```
 
 14. To view the application, just go to the link in the gray box below. Make sure to replace *<your_account_name* with your actual Cloud9 IDE account name that you created at the beginning of this tutorial!
 
-```python
-http://opensr-c9-<your_account_name>.c9.io/
-```
+  ```python
+  http://opensr-c9-<your_account_name>.c9.io/
+  ```
 
 15. You probably noticed that you don't have any tests on the page your just went to. Go ahead and create tests by viewing the administrative control panel! Use the link in the gray box below. Again, remember to put your actual account name in the link.
 
-```python
-http://opensr-c9-<your_account_name>.c9.io/admin/
-```
+  ```python
+  http://opensr-c9-<your_account_name>.c9.io/admin/
+  ```
