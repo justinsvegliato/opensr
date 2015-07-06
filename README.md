@@ -79,7 +79,7 @@ To install OpenSR, we just need to do the steps below:
   python manage.py runserver $IP:$PORT
   ```
 
-14. To view the application, just go to the link in the gray box below. Make sure to replace **<your_account_name>** with your actual Cloud9 IDE account name that you created at the beginning of this tutorial (make sure to replace the angle brackets (i.e. **<** or **>**) too)!
+14. To view the application, just go to the link in the gray box below. Make sure to replace **<your_account_name>** with your actual Cloud9 IDE account name that you created at the beginning of this tutorial (make sure to replace the angle brackets, i.e. **<** or **>**, too)!
 
   ```python
   http://opensr-c9-<your_account_name>.c9.io/
