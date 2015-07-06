@@ -40,9 +40,9 @@ To install OpenSR, we just need to do the steps below:
   
   4. Once you refresh, you should have a page with just one row. Go ahead and click the purple text of that row. It should start with the text **heroku-postgres**. It'll bring up a new page. Keep this page open. We'll need the this information in the next step.
   
-8. Now that we've created a database, we need to plug in the database details into Cloud9. To do so, go back to your OpenSR workspace in Cloud9. On the left hand side of that page, you'll see a navigation pane that contains folders and files. Open up the top folder **opens*r* if it's not already open and then open up the other **opensr** . Once we've opened up that folder, click the **settings.py** file. We'll need to change a few aspects of this file to account for the database we've just created.
+8. Now that we've created a database, we need to plug in the database details into Cloud9. To do so, go back to your OpenSR workspace in Cloud9. On the left hand side of that page, you'll see a navigation pane that contains folders and files. Open up the top folder **opensr** if it's not already open and then open up the other **opensr** . Once we've opened up that folder, click the **settings.py** file. We'll need to change a few aspects of this file to account for the database we've just created.
 
-9. In **settings.py** file, we only need to modify a couple things. Let's start with the database details. Change the information between the single quotes (*'*) for **NAME**, **USER**, **PASSWORD**, **HOST**, and **PORT**. This information is listed on the Heroku page that we kept open from before. Just copy and paste the database details to the **settings.py** file that we have open. Be careful! If we accidentally delete a *'* or another character, it might mess up our program!
+9. In **settings.py** file, we only need to modify a couple things. Let's start with the database details. Change the information between the single quotes (*'*) for **NAME**, **USER**, **PASSWORD**, **HOST**, and **PORT**. This information is listed on the Heroku page that we kept open from before. Just copy and paste the database details to the **settings.py** file that we have open. Be careful! If we accidentally delete a single quote (**'**) or another character, it might mess up our program!
 
   ```python
   DATABASES = {
