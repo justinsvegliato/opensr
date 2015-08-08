@@ -28,11 +28,11 @@ To install OpenSR, we just need to do the steps below:
   ./install.sh
   ```
 
-6. Next, we need to get a free database from Heroku. To do that, create a Heroku account by clicking (here)[https://signup.heroku.com/www-home-top]. Again, make sure to check your email to activate the new account. After clicking through the links from the activation email, you should end up at your Heroku dashboard. If not, click (here)[https://id.heroku.com/login] to login.
+6. Next, we need to get a free database from Heroku. To do that, create a Heroku account by clicking [here](https://signup.heroku.com/www-home-top). Again, make sure to check your email to activate the new account. After clicking through the links from the activation email, you should end up at your Heroku dashboard. If not, click [here](https://id.heroku.com/login) to login.
 
 7. Next, we need to use Heroku to create a free database for us to use. This'll store participant data. 
 
-  1. Click (here)[https://postgres.heroku.com/databases] to create a database.
+  1. Click [here](https://postgres.heroku.com/databases) to create a database.
   
   2. Once we're on that page, click the **Create database** button. This'll display a prompt that provides all the options you can choose from. 
   
