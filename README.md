@@ -1,4 +1,4 @@
-# Basic Installation
+# `opensr`
 
 To install OpenSR, we just need to do the steps below:
 
